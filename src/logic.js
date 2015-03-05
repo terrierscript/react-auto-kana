@@ -1,5 +1,5 @@
 var japanese = require("japanese")
-var kanamap = require("../lib/kanamap")
+var kanamap = require("./kanamap")
 
 var toKana = function(map, value){
   var kana = value

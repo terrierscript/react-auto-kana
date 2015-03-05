@@ -30,3 +30,4 @@ var Example = React.createClass({
   }
 })
 
+React.render(document.getElementById("container"), Example)

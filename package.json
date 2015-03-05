@@ -2,7 +2,7 @@
   "name": "react-kana-input",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "dependencies": {
     "diff": "^1.3.0",
     "extend": "^2.0.0",
@@ -29,8 +29,8 @@
   },
   "scripts": {
     "lint": "eslint js/**/*.jsx",
-    "server": "harp server",
-    "watch": "watchify -d js/index.jsx -t babelify -o build.js -v",
+    "server": "harp server example",
+    "watch": "watchify -d example/example.jsx -t babelify -o build.js -v",
     "start": "npm run server && npm run watch",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader",
     "dist" : "",
