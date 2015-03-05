@@ -11,12 +11,13 @@ var updateMap = function(map, key, value){
   if(!value){
     return map
   }
-  if(isHiragana(key)){ // すでにひらがな
+  if(isHiragana(key)){ // すでにひらがなならskip
     return map
   }
-  if(!isHiragana(value)){
+  if(!isHiragana(value)){ // mapから現在の変換候補を取得
     value = map[value] || value
   }
+  // 現在より短い読みになっているなら上書き
   var currentValue = map[key]
   if(currentValue && currentValue.length < value.length){
     value = currentValue
@@ -26,36 +27,35 @@ var updateMap = function(map, key, value){
 }
 
 // 隣接したdiffを、addとremoveのペアにする
-var getDiffSet = function(prevStr, currentStr){
-  var diffSet = []
+var getDiffPair = function(prevStr, currentStr){
+  var diffPair = []
   var reversedDiff = JsDiff.diffChars(prevStr, currentStr)
   reversedDiff.reduce(function(addedDiff, removedDiff){
     if(!addedDiff.added || !removedDiff.removed){
       return removedDiff
     }
-    diffSet.push({
+    diffPair.push({
       added : addedDiff,
       removed : removedDiff
     })
     return removedDiff
   })
-  return diffSet
+  return diffPair
 }
 
 module.exports = function(prev, current, baseMap){
   baseMap = baseMap || {}
-  prev = japanese.hiraganize(prev)
   current = japanese.hiraganize(current)
-  // 連続で変換されたときのmapから、先んじて戻す。
+  prev = japanese.hiraganize(prev)
   prev = baseMap[prev] || prev
 
   if(prev === current){
     return baseMap
   }
 
-  var map = extend(true, {}, baseMap)
-  var diffSet = getDiffSet(prev, current)
-  diffSet.forEach(function(set){
+  var map = extend(true, {}, baseMap) // clone
+  var diffPair = getDiffPair(prev, current)
+  diffPair.forEach(function(set){
     map = updateMap(map, set.added.value, set.removed.value)
   })
   return map

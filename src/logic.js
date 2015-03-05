@@ -9,7 +9,7 @@ var toKana = function(map, value){
     kana = kana.replace(key, val)
   })
 
-  // to only kana
+  // sanitize (to only kana)
   var m = kana.match(japanese.hiraganaRegex)
   return m ? m.join("") : ""
 }
@@ -18,6 +18,7 @@ var build = function(state){
   var prev = japanese.hiraganize(state.prev || "")
   var current = japanese.hiraganize(state.value || "")
   var map = state.map || {}
+  // hiragana and katakana
   if(prev === current){
     return state
   }
@@ -33,6 +34,7 @@ var build = function(state){
 
 module.exports = function(state){
   var next = build(state)
+  // store prev value
   next.prev = state.value
 
   return next
