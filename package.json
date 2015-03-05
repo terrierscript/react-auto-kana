@@ -1,0 +1,46 @@
+{
+  "name": "example-react-kana",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "diff": "^1.3.0",
+    "extend": "^2.0.0",
+    "japanese": "^0.2.1",
+    "kanautil": "git://github.com/suisho/node-kanautil",
+    "lodash": "^3.3.0",
+    "marty": "^0.8.10",
+    "object-path": "^0.9.0",
+    "react": "^0.13.0-rc1",
+    "react-select": "^0.3.2",
+    "reactify": "^1.0.0",
+    "traverse": "^0.6.6"
+  },
+  "devDependencies": {
+    "babel": "^4.5.4",
+    "babelify": "^5.0.3",
+    "beefy": "^2.1.3",
+    "browserify": "^8.1.3",
+    "eslint": "^0.15.1",
+    "eslint-plugin-react": "^1.2.2",
+    "espower-loader": "^0.10.0",
+    "hapi": "^8.2.0",
+    "harp": "^0.15.2",
+    "intelli-espower-loader": "^0.6.0",
+    "minimist": "^1.1.0",
+    "power-assert": "^0.10.2",
+    "watchify": "^2.3.0",
+    "wzrd": "^1.2.1"
+  },
+  "scripts": {
+    "lint": "eslint js/**/*.jsx",
+    "server": "harp server",
+    "watch": "watchify -d js/index.jsx -t babelify -o build.js -v",
+    "start": "npm run server && npm run watch",
+    "test": "mocha --compilers js:babel/register --require intelli-espower-loader",
+    "env": "env"
+  },
+  "keywords": [],
+  "author": "suisho",
+  "license": "ISC"
+}
