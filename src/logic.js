@@ -31,9 +31,9 @@ var build = function(state){
   return nextState
 }
 
-module.exports = function(state, callback){
+module.exports = function(state){
   var next = build(state)
   next.prev = state.value
 
-  callback(null, next)
+  return next
 }
