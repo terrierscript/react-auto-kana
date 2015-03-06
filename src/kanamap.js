@@ -1,13 +1,16 @@
 var extend = require("extend")
 var japanese = require("japanese")
 var JsDiff = require("diff")
+var japarser = require("japarser")
 
 var isHiragana = function(str){
   var m = str.match(japanese.hiraganaRegex)
   return (m && m.length === str.length) ? true : false
 }
 
+
 var updateMap = function(map, key, value){
+  key = japarser(key)[0].value
   if(!value){
     return map
   }
