@@ -40,7 +40,7 @@
   "keywords": [],
   "author": "suisho",
   "license": "ISC",
-  "browser" : {
+  "browserify" : {
     "fullPaths" : false
   }
 }
