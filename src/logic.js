@@ -1,14 +1,14 @@
 var japanese = require("japanese")
 var kanamap = require("./kanamap")
-
-var toKana = function(map, value){
+var toKana = require("./to_kana")
+var buildKana = function(map, value){
   var kana = value
   // convert with map
   Object.keys(map).forEach(function(key){
     var val = map[key]
     kana = kana.replace(key, val)
   })
-
+  return toKana(kana)
   // sanitize (to only kana)
   var m = kana.match(japanese.hiraganaRegex)
   return m ? m.join("") : ""
@@ -23,7 +23,7 @@ var build = function(state){
     return state
   }
   map = kanamap(prev, current, map)
-  var kana = toKana(map, current)
+  var kana = buildKana(map, current)
 
   var nextState = {
     kana : kana,
