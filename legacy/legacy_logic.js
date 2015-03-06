@@ -83,7 +83,7 @@ var main = function(state){
   if(prevValue === value){
     return state
   }
-  return build(prevValue, value, state.buffer, state.kana)
+  return build(prevValue, value, state.buffer || "", state.kana)
 }
 
 module.exports = function(state){
