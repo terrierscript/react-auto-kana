@@ -29,5 +29,4 @@ var Example = React.createClass({
     )
   }
 })
-
-React.render(<Example/>, document.getElementById("container"))
+module.exports = Example

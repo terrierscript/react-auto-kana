@@ -2,7 +2,7 @@ var defaultLogic = require("../src/logic")
 var legacyLogic = require("../legacy/legacy_logic")
 
 var React = require("react")
-var KanaInput = require("../src/KanaInput.jsx")
+var Example = require("./example.jsx")
 
 var CompareExample = React.createClass({
   getCleanValue(){
@@ -26,8 +26,10 @@ var CompareExample = React.createClass({
   onChange(e){
     var currentState = this.state
     var value = e.target.value
+    console.log("Change", currentState)
     currentState.defaultState.value = value
     currentState.legacyState.value = value
+    console.log(JSON.stringify([currentState.defaultState.prev, value, currentState.defaultState.map], "  "))
 
     var nextDefaultState = defaultLogic(currentState.defaultState)
     var nextLegacyState = legacyLogic(currentState.legacyState)
@@ -57,3 +59,4 @@ var CompareExample = React.createClass({
 })
 
 React.render(<CompareExample/>, document.getElementById("container"))
+React.render(<Example/>, document.getElementById("normaly-container"))

@@ -33,6 +33,7 @@ var build = function(state){
 }
 
 module.exports = function(state){
+  console.log(state)
   var next = build(state)
   // store prev value
   next.prev = state.value
