@@ -30,7 +30,7 @@
   "scripts": {
     "lint": "eslint js/**/*.jsx",
     "server": "harp server example",
-    "watch": "watchify -v -d example/example.jsx -t babelify -o example/index.js",
+    "watch": "watchify -v -d example/example.jsx -t babelify -o example/build.js",
     "build": "browserify src/KanaInput.jsx -t babelify > dist/index.js",
     "start": "npm run server && npm run watch",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader",
