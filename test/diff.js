@@ -11,7 +11,8 @@ describe("diff", function(){
   it("convert", function(){
     var result = diff("山田たろう", "山田太郎")
     var expect = [
-      { value: '山田' }, { added: '太郎', removed: 'たろう' }
+      { value: '山田' },
+      { added: '太郎', removed: 'たろう' }
     ]
     assert.deepEqual(result, expect)
   })
@@ -23,17 +24,20 @@ describe("diff", function(){
     ]
     assert.deepEqual(result, expect)
   })
-  it("insert", function(){
-    var result = diff("山田太郎", "山田ドカベン太郎")
+  it("add first", function(){
+    var result = diff("太郎", "山田太郎")
     var expect = [
-      { value: '山田' }, { added: 'ドカベン'}, {value: '太郎' }
+      { added: '山田'},
+      { value: '太郎'}
     ]
     assert.deepEqual(result, expect)
   })
-  it("it", function(){
-    var result = diff("生生", "生せい")
+  it("insert", function(){
+    var result = diff("山田太郎", "山田ドカベン太郎")
     var expect = [
-      { value: '生' }, { added: 'せい', removed: '生' }
+      { value: '山田' },
+      { added: 'ドカベン'},
+      {value: '太郎' }
     ]
     assert.deepEqual(result, expect)
   })

@@ -1,5 +1,5 @@
 var japanese = require("japanese")
-var kanadic = require("./kanadic")
+//var kanadic = require("./kanadic")
 var rekana = require("./rekana")
 var isHiragana = require("./is_hiragana")
 var diff = require("./diff")
@@ -54,19 +54,22 @@ var diff = require("./diff")
 //   })
 //   return value
 // }
+var isConvert = function(d){
+  return d.removed && d.added
+}
 var build2 = function(state){
   console.log("============")
   var prev = japanese.hiraganize(state.prev || "")
   var current = japanese.hiraganize(state.value || "")
-  if(prev === current){
+  if(prev === current){ // no change
     return state
   }
-  var diffs = diff(prev, current)
-  // generate stack
+  var diffPack = diff(prev, current)
+  // analyse
   var stack = state.stack || []
-  var bornes = state.bones || []
-  diffs.forEach(function(d){
-    if(!d.removed || !d.added){
+  var bornes = state.bornes || []
+  diffPack.forEach(function(d){
+    if(!isConvert(d)){
       return
     }
     if(isHiragana(d.added)){
@@ -74,16 +77,17 @@ var build2 = function(state){
     }
     stack.push([d.added, d.removed])
     var newKana = rekana.replaceConvert(d.added, stack)
+    //console.log(newKana, d.added, JSON.stringify(stack))
     bornes.push({
       kana : newKana,
       value : d.added
     })
   })
-  console.log(bornes)
+  console.log(JSON.stringify(bornes))
   // generate structure
   // generate kana
   var kana = []
-  diffs.forEach(function(d){
+  diffPack.forEach(function(d){
     if(d.value){
       kana.push(rekana(d.value, stack))
     }
@@ -91,12 +95,13 @@ var build2 = function(state){
       kana.push(rekana(d.added, stack))
     }
   })
-  console.log(prev, current, kana)
-  console.log(diffs)
-  console.log(JSON.stringify(stack))
+  // console.log(prev, current, kana)
+  // console.log(diffPack)
+  // console.log(JSON.stringify(stack))
   var next = {
     stack : stack,
-    kana : kana.join("")
+    kana : kana.join(""),
+    bornes : bornes
   }
   return next
 }
