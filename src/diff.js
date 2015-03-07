@@ -15,17 +15,25 @@ var normalize = function(diff){
   str.value = diff.value
   return str
 }
+
+var hasChange = function(diff){
+  return diff.added || diff.removed
+}
 module.exports = function(prev, current) {
   var diff = JsDiff.diffChars(prev, current)
   var diffStruct = []
   diff.reduce(function(first, second, index, arr) {
-    //console.log(first, second)
     if (first.added && second.removed) {
       diffStruct.push({
         added: first.value,
         removed: second.value
       })
-    }else if(!second.added && !second.removed) {
+      return {}
+    }
+    if(first.added && !second.removed) {
+      diffStruct.push(normalize(first))
+    }
+    if(!hasChange(second)) {
       diffStruct.push(normalize(second))
     } else if(index === arr.length - 1 ){ // last
       diffStruct.push(normalize(second))

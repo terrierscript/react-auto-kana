@@ -23,6 +23,13 @@ describe("diff", function(){
     ]
     assert.deepEqual(result, expect)
   })
+  it("insert", function(){
+    var result = diff("山田太郎", "山田ドカベン太郎")
+    var expect = [
+      { value: '山田' }, { added: 'ドカベン'}, {value: '太郎' }
+    ]
+    assert.deepEqual(result, expect)
+  })
   it("it", function(){
     var result = diff("生生", "生せい")
     var expect = [
