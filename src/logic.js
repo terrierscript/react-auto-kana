@@ -1,6 +1,12 @@
 var japanese = require("japanese")
 var kanamap = require("./kanamap")
-var onlyKana = require("./kanautil").onlyKana
+
+
+var onlyKana = function(value){
+  var m = value.match(japanese.hiraganaRegex)
+  return m ? m.join("") : ""
+}
+
 var buildKana = function(map, value){
   var kana = value
   // convert with map

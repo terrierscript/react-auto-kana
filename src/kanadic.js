@@ -20,7 +20,6 @@ var updateMap = function(map, key, value){
   if(!isHiragana(value)){ // mapから現在の変換候補を取得
     value = map[value] || value
   }
-  // 現在より短い読みになっているなら上書き
   var currentValue = map[key]
   if(currentValue && currentValue.length < value.length){
     value = currentValue
@@ -30,7 +29,7 @@ var updateMap = function(map, key, value){
 }
 
 // 隣接したdiffを、addとremoveのペアにする
-var getDiffPair = function(prevStr, currentStr){
+var getConvertPair = function(prevStr, currentStr){
   var diffPair = []
   var reversedDiff = JsDiff.diffChars(prevStr, currentStr)
   reversedDiff.reduce(function(addedDiff, removedDiff){
@@ -50,14 +49,13 @@ module.exports = function(prev, current, baseMap){
   baseMap = baseMap || {}
   current = japanese.hiraganize(current)
   prev = japanese.hiraganize(prev)
-  prev = baseMap[prev] || prev
+  //prev = baseMap[prev] || prev
 
   if(prev === current){
     return baseMap
   }
-
   var map = extend(true, {}, baseMap) // clone
-  var diffPair = getDiffPair(prev, current)
+  var diffPair = getConvertPair(prev, current)
   diffPair.forEach(function(set){
     map = updateMap(map, set.added.value, set.removed.value)
   })
