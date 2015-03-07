@@ -17,25 +17,25 @@ var CompareExample = React.createClass({
       legacyState : this.getCleanValue()
     }
   },
-  onUpdateKana(data){
-    this.setState({ kana : data.kana })
-  },
-  onUpdateKanaLegacy(data){
-    this.setState({ kanaLegacy : data.kana })
+  clear(){
+    this.replaceState(this.getInitialState())
   },
   onChange(e){
-    var currentState = this.state
     var value = e.target.value
-    console.log("Change", currentState)
+    if(value === ""){
+      this.clear()
+      return
+    }
+    var currentState = this.state
     currentState.defaultState.value = value
     currentState.legacyState.value = value
-    console.log(JSON.stringify([currentState.defaultState.prev, value, currentState.defaultState.map], "  "))
+    // console.log(JSON.stringify([currentState.defaultState.prev, value, currentState.defaultState.map], "  "))
 
     var nextDefaultState = defaultLogic(currentState.defaultState)
     var nextLegacyState = legacyLogic(currentState.legacyState)
 
     this.setState({
-      input : e.target.value,
+      input : value,
       defaultState : nextDefaultState,
       legacyState : nextLegacyState
     })
@@ -43,13 +43,10 @@ var CompareExample = React.createClass({
   render(){
     return (
       <div>
-        <h1>React Kana Input</h1>
         <div className="input-block">
-          <h2>Input</h2>
           <input value={this.state.input} onChange={this.onChange}/>
         </div>
         <div className="kana-block">
-          <h2>Kana</h2>
           <div>Normal: {this.state.defaultState.kana}</div>
           <div>Legacy: {this.state.legacyState.kana}</div>
         </div>

@@ -2,30 +2,25 @@ var extend = require("extend")
 var japanese = require("japanese")
 var JsDiff = require("diff")
 var japarser = require("japarser")
+var isHiragana = require("./is_hiragana")
 
-var isHiragana = function(str){
-  var m = str.match(japanese.hiraganaRegex)
-  return (m && m.length === str.length) ? true : false
-}
-
-
-var updateMap = function(map, key, value){
+var updateDic = function(dic, key, value){
   key = japarser(key)[0].value
   if(!value){
-    return map
+    return dic
   }
   if(isHiragana(key)){ // すでにひらがなならskip
-    return map
+    return dic
   }
-  if(!isHiragana(value)){ // mapから現在の変換候補を取得
-    value = map[value] || value
+  if(!isHiragana(value)){ // dicから現在の変換候補を取得
+    value = dic[value] || value
   }
-  var currentValue = map[key]
-  if(currentValue && currentValue.length < value.length){
+  var currentValue = dic[key]
+  if(currentValue && currentValue.length <= value.length){
     value = currentValue
   }
-  map[key] = value
-  return map
+  dic[key] = value
+  return dic
 }
 
 // 隣接したdiffを、addとremoveのペアにする
@@ -45,19 +40,19 @@ var getConvertPair = function(prevStr, currentStr){
   return diffPair
 }
 
-module.exports = function(prev, current, baseMap){
-  baseMap = baseMap || {}
+module.exports = function(prev, current, baseDic){
+  baseDic = baseDic || {}
   current = japanese.hiraganize(current)
   prev = japanese.hiraganize(prev)
-  //prev = baseMap[prev] || prev
+  //prev = baseDic[prev] || prev
 
   if(prev === current){
-    return baseMap
+    return baseDic
   }
-  var map = extend(true, {}, baseMap) // clone
+  var dic = extend(true, {}, baseDic) // clone
   var diffPair = getConvertPair(prev, current)
   diffPair.forEach(function(set){
-    map = updateMap(map, set.added.value, set.removed.value)
+    dic = updateDic(dic, set.added.value, set.removed.value)
   })
-  return map
+  return dic
 }
