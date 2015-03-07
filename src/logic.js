@@ -1,5 +1,5 @@
 var japanese = require("japanese")
-var kanamap = require("./kanamap")
+var kanadic = require("./kanadic")
 
 
 var onlyKana = function(value){
@@ -25,7 +25,7 @@ var build = function(state){
   if(prev === current){
     return state
   }
-  map = kanamap(prev, current, map)
+  map = kanadic(prev, current, map)
   var kana = buildKana(map, current)
 
   var nextState = {

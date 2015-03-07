@@ -20550,7 +20550,7 @@ module.exports = function (prev, current, baseMap) {
 "use strict";
 
 var japanese = require("japanese");
-var kanamap = require("./kanamap");
+var kanadic = require("./kanadic");
 var toKana = require("./to_kana");
 var buildKana = function buildKana(map, value) {
   var kana = value;
@@ -20573,7 +20573,7 @@ var build = function build(state) {
   if (prev === current) {
     return state;
   }
-  map = kanamap(prev, current, map);
+  map = kanadic(prev, current, map);
   var kana = buildKana(map, current);
 
   var nextState = {
@@ -20591,7 +20591,7 @@ module.exports = function (state) {
   return next;
 };
 
-},{"./kanamap":161,"./to_kana":163,"japanese":4}],163:[function(require,module,exports){
+},{"./kanadic":161,"./to_kana":163,"japanese":4}],163:[function(require,module,exports){
 "use strict";
 
 var japanese = require("japanese");
