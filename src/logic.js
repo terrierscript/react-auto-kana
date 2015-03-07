@@ -42,7 +42,7 @@ var build = function(state){
 }
 
 module.exports = function(state){
-  console.log(state)
+  console.log(state.prev, state.value, state.dic)
   var next = build(state)
   // store prev value
   next.prev = state.value
