@@ -1,4 +1,4 @@
-var extend = require("extend")
+// var extend = require("extend")
 var japanese = require("japanese")
 var JsDiff = require("diff")
 var japarser = require("japarser")
@@ -40,19 +40,20 @@ var getConvertPair = function(prevStr, currentStr){
   return diffPair
 }
 
-module.exports = function(prev, current, baseDic){
-  baseDic = baseDic || {}
+module.exports = function(prev, current){
+  //baseDic = baseDic || []
   current = japanese.hiraganize(current)
   prev = japanese.hiraganize(prev)
-  //prev = baseDic[prev] || prev
 
   if(prev === current){
-    return baseDic
+    return []
   }
-  var dic = extend(true, {}, baseDic) // clone
+  //var dic = baseDic.concat() // clone
   var diffPair = getConvertPair(prev, current)
-  diffPair.forEach(function(set){
-    dic = updateDic(dic, set.added.value, set.removed.value)
+  return diffPair.forEach(function(set){
+    return [set.added.value, set.removed.value]
+    //dic.push(pair)
+    //dic = updateDic(dic, set.added.value, set.removed.value)
   })
-  return dic
+  //return dic
 }
