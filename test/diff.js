@@ -1,5 +1,5 @@
 var assert = require("power-assert")
-var diff = require("../src/diff")
+var diff = require("../lib/diff")
 describe("diff", function(){
   it("first", function(){
     var result = diff("", "山田")
