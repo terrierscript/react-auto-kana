@@ -76,6 +76,10 @@ describe("logic", function(){
     var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎"]
     stepTest(steps, "やまだたろう")
   })
+  it("Yamada Removed scenario", function(){
+    var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山", "山ｄ", "山だ", "山田", "山田", "山田ｔ", "山田た", "山田た"]
+    stepTest(steps, "やまだた")
+  })
   it("SuperMario1 scenario", function(){
     var steps = ["ｓ", "す", "すｈ", "すは", "素破", "素破",
     "素破ｍ", "素破ま", "素破まｒ", "素破まり",
