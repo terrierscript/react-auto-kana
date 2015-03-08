@@ -1,5 +1,5 @@
 var React = require("react")
-var KanaInput = require("../src/KanaInput.jsx")
+var KanaInput = require("../dist/index")
 
 var Example = React.createClass({
   getInitialState(){

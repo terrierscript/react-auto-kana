@@ -29,10 +29,9 @@
     "lint": "eslint js/**/*.jsx",
     "server": "harp server example",
     "watch": "watchify -v -d example/compare.jsx -t babelify -o example/dist/build.js",
-    "build": "jsx src/KanaInput.jsx > dist/index.js",
+    "dist": "babel src/KanaInput.jsx > dist/index.js; cp src/*.js dist/",
     "start": "npm run server && npm run watch",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader",
-    "dist": "",
     "env": "env"
   },
   "keywords": [],
