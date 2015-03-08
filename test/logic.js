@@ -41,7 +41,7 @@ describe("logic", function(){
     })
     assert.deepEqual("やまだたろう", next.kana)
   })
-  it("ｙ -> や XXX", function(){
+  it("ｙ -> や", function(){
     var steps = ["ｙ" , "や"]
     stepTest(steps, "や")
   })
@@ -67,5 +67,9 @@ describe("logic", function(){
       ]
     })
     assert.deepEqual("やまだ", next.kana) // not change
+  })
+  it("Dokaben scenario", function(){
+    var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎"]
+    stepTest(steps, "やまだたろう")
   })
 })
