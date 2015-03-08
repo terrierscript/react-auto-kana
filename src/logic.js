@@ -1,5 +1,5 @@
 var japanese = require("japanese")
-var rekana = require("../lib/rekana")
+var rekana = require("./rekana")
 var kanachar = require("../lib/kanachar")
 var diff = require("../lib/diff")
 
@@ -27,34 +27,34 @@ var build = function(state){
   var prev = japanese.hiraganize(state.prev || "")
   var current = japanese.hiraganize(state.value || "")
   if(prev === current){ // no change
-    return state
+    return {}
   }
-  var kanaHistory = state.kanaHistory || {}
-  // skip add and remove
+  // 下記挙動の場合のskip
   // ex: 山田 -> 山 -> 山田
-  if(kanaHistory[current]){
-    return {
-      dict : state.dict,
-      kana : kanaHistory[current],
-      kanaHistory : kanaHistory
-    }
+  var cache = state.cache || {}
+  if(cache[current]){
+    return { kana : cache[current] }
   }
   var dict = buildConvertDict(prev, current, state.dict)
   var converted = rekana(current, dict)
+  // console.log(converted, dict)
   if(!kanachar(converted)){
     converted = state.kana
   }
-  kanaHistory[current] = converted
-  var next = {
+  cache[current] = converted
+  return {
     dict : dict,
     kana : converted,
-    kanaHistory : kanaHistory
+    cache : cache
   }
-  return next
 }
 module.exports = function(state){
   var next = build(state)
-  // store prev value
-  next.prev = state.value
-  return next
+  return {
+    dict : next.dict || state.dict || [],
+    kana : next.kana || state.kana || "",
+    cache : next.cache || state.cache || {},
+    // store prev value
+    prev : state.value,
+  }
 }

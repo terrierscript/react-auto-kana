@@ -1,7 +1,7 @@
-var kanachar = require("./kanachar")
+var kanachar = require("../lib/kanachar")
 
 var replaceKana = function(value, dic){
-  dic.concat().forEach(function(d){
+  dic.concat().reverse().forEach(function(d){
     if(!kanachar(d[1])){
       return
     }
@@ -10,7 +10,7 @@ var replaceKana = function(value, dic){
   return value
 }
 var revert = function(value, dic){
-  dic.concat().forEach(function(d){
+  dic.concat().reverse().forEach(function(d){
     value = value.replace(d[0], d[1])
   })
   return value
