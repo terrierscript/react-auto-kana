@@ -40,6 +40,15 @@ describe("logic", function(){
       return result
     }, {})
   })
+  it("not お -> を", function(){
+    // var steps = ["まりお" ,"まりを","鞠男", "毬男"]
+    // steps.reduce(function(state, value){
+    //   state.value = value
+    //   var result = logic(state)
+    //   assert.equal("まりお", result.kana)
+    //   return result
+    // }, {})
+  })
   it("remove", function(){
     var next = logic({
       value: "山",
