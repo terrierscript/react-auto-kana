@@ -3,25 +3,25 @@ var rekana = require("./rekana")
 var kanachar = require("../lib/kanachar")
 var diff = require("../lib/diff")
 
-var buildConvertDict = function(prev, current, dic){
+var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
-  dic = dic || []
+  pairs = pairs || []
   diffPack.forEach(function(d){
     if(!d.removed || !d.added){ // not pair
       return
     }
-    var pairDic = [d.added, d.removed]
+    var pair = [d.added, d.removed]
     if(!kanachar(d.removed)){
       // を -> お という変換をなるべくスムーズに
-      var reverted = rekana.revert(d.removed, dic)
+      var reverted = rekana.revert(d.removed, pairs)
       if(kanachar(reverted)){
-        dic.unshift([d.added, reverted])
+        pairs.unshift([d.added, reverted])
       }
       return
     }
-    dic.unshift(pairDic)
+    pairs.unshift(pair)
   })
-  return dic
+  return pairs
 }
 var build = function(state){
   var prev = japanese.hiraganize(state.prev || "")
@@ -35,26 +35,28 @@ var build = function(state){
   if(cache[current]){
     return { kana : cache[current] }
   }
-  var dict = buildConvertDict(prev, current, state.dict)
-  var converted = rekana(current, dict)
-  // console.log(converted, dict)
+
+  // default
+  var pairs = convertPairs(prev, current, state.pairs)
+  var converted = rekana(current, pairs)
   if(!kanachar(converted)){
     converted = state.kana
   }
   cache[current] = converted
   return {
-    dict : dict,
+    pairs : pairs,
     kana : converted,
     cache : cache
   }
 }
 module.exports = function(state){
   var next = build(state)
-  return {
-    dict : next.dict || state.dict || [],
+  var n = {
+    pairs : next.pairs || state.pairs || [],
     kana : next.kana || state.kana || "",
     cache : next.cache || state.cache || {},
     // store prev value
     prev : state.value,
   }
+  return n
 }
