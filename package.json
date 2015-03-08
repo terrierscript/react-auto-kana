@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "dependencies": {
+    "compact-diff": "0.0.1",
     "diff": "^1.3.0",
     "extend": "^2.0.0",
     "japanese": "^0.2.1",
@@ -11,7 +12,6 @@
   },
   "devDependencies": {
     "reactify": "^1.0.0",
-    "kanautil": "git://github.com/suisho/node-kanautil",
     "babel": "^4.5.4",
     "babelify": "^5.0.3",
     "beefy": "^2.1.3",
@@ -19,28 +19,26 @@
     "eslint": "^0.15.1",
     "eslint-plugin-react": "^1.2.2",
     "espower-loader": "^0.10.0",
-    "hapi": "^8.2.0",
     "harp": "^0.15.2",
     "intelli-espower-loader": "^0.6.0",
     "minimist": "^1.1.0",
     "power-assert": "^0.10.2",
-    "watchify": "^2.3.0",
-    "wzrd": "^1.2.1"
+    "watchify": "^2.3.0"
   },
   "scripts": {
     "lint": "eslint js/**/*.jsx",
     "server": "harp server example",
     "watch": "watchify -v -d example/compare.jsx -t babelify -o example/dist/build.js",
-    "build": "browserify src/KanaInput.jsx -t babelify > dist/index.js",
+    "build": "jsx src/KanaInput.jsx > dist/index.js",
     "start": "npm run server && npm run watch",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader",
-    "dist" : "",
+    "dist": "",
     "env": "env"
   },
   "keywords": [],
   "author": "suisho",
   "license": "ISC",
-  "browserify" : {
-    "fullPaths" : false
+  "browserify": {
+    "fullPaths": false
   }
 }

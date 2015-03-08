@@ -1,7 +1,7 @@
 var japanese = require("japanese")
 var rekana = require("./rekana")
 var kanachar = require("./kanachar")
-var diff = require("../lib/diff")
+var diff = require("compact-diff")
 
 var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
