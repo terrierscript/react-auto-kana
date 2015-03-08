@@ -1,4 +1,4 @@
-var kanachar = require("../lib/kanachar")
+var kanachar = require("../src/kanachar")
 var assert = require("power-assert")
 
 describe("hiragana", function(){

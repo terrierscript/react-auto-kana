@@ -7,12 +7,13 @@ var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
   pairs = pairs || []
   diffPack.forEach(function(d){
-    if(!d.removed || !d.added){ // not pair
+    if(!d.removed || !d.added){ // skip if not pair
       return
     }
     var pair = [d.added, d.removed]
     if(!kanachar(d.removed)){
-      // を -> お という変換をなるべくスムーズに
+      // For IME convert like below
+      // ex: お -> を -> お
       var reverted = rekana.revert(d.removed, pairs)
       if(kanachar(reverted)){
         pairs.unshift([d.added, reverted])
@@ -55,7 +56,6 @@ module.exports = function(state){
     pairs : next.pairs || state.pairs || [],
     kana : next.kana || state.kana || "",
     cache : next.cache || state.cache || {},
-    // store prev value
     prev : state.value,
   }
 }
