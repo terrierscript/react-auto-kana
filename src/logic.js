@@ -1,6 +1,6 @@
 var japanese = require("japanese")
 var rekana = require("./rekana")
-var kanachar = require("../lib/kanachar")
+var kanachar = require("./kanachar")
 var diff = require("../lib/diff")
 
 var convertPairs = function(prev, current, pairs){
@@ -12,7 +12,7 @@ var convertPairs = function(prev, current, pairs){
     }
     var pair = [d.added, d.removed]
     if(!kanachar(d.removed)){
-      // For IME convert like below
+      // 下記のような変遷をたどった場合の対応策
       // ex: お -> を -> お
       var reverted = rekana.revert(d.removed, pairs)
       if(kanachar(reverted)){
@@ -30,7 +30,8 @@ var build = function(state){
   if(prev === current){ // no change
     return {}
   }
-  // 下記挙動の場合のskip
+  // 完全一致の文字列が過去に存在した場合は、cacheを利用
+  // 下記挙動の場合の対処も兼ねる
   // ex: 山田 -> 山 -> 山田
   var cache = state.cache || {}
   if(cache[current]){

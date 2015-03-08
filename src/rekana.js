@@ -1,4 +1,4 @@
-var kanachar = require("../lib/kanachar")
+var kanachar = require("./kanachar")
 
 var replaceKana = function(value, dic){
   dic.concat().reverse().forEach(function(d){
