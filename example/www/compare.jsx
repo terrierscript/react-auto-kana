@@ -47,8 +47,10 @@ var CompareExample = React.createClass({
           <input value={this.state.input} onChange={this.onChange}/>
         </div>
         <div className="kana-block">
-          <div>Normal: {this.state.defaultState.kana}</div>
-          <div>Legacy: {this.state.legacyState.kana}</div>
+          <h3>React Kana Input</h3>
+          <div>{this.state.defaultState.kana}</div>
+          <h3>Legacy(mimic for <a href="http://rubricks.org/autoKana.html">autoKana</a>)</h3>
+          <div> {this.state.legacyState.kana}</div>
         </div>
       </div>
     )
