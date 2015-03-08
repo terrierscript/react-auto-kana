@@ -53,7 +53,7 @@ describe("logic", function(){
     var steps = ["まりお" ,"鞠男", "毬男"]
     stepTest(steps, "まりお")
   })
-  it("not お -> を", function(){
+  it("not お -> を XXX", function(){
     var steps = ["まりお","まりを","鞠男", "毬男"]
     stepTest(steps, "まりお")
   })

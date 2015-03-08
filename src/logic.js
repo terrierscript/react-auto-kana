@@ -10,10 +10,30 @@ var buildConvertDict = function(prev, current, dic){
     if(!d.removed || !d.added){
       return
     }
-    if(kanachar(d.added)){
+    // if(kanachar(d.added)){
+    //   return
+    // }
+    //dic.unshift([d.added, d.removed])
+    var pairDic = [d.added, d.removed]
+    if(kanachar(d.added) && !kanachar(d.removed)){
+      var rk = rekana.revert(current, [pairDic].concat(dic))
+      if(kanachar(rk)
+        && rk.length === d.added.length
+        && rk !== d.added){
+        dic.unshift([d.added, rk])
+        return
+      }
+    }
+    if(!kanachar(d.removed)){
+      var reverted = rekana.revert(d.removed, dic)
+      if(kanachar(reverted)){
+        //console.log(d, reverted, dic)
+        dic.unshift([d.added, reverted])
+      }
       return
     }
-    dic.unshift([d.added, d.removed])
+    dic.unshift(pairDic)
+
   })
   return dic
 }
