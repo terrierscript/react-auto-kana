@@ -27,6 +27,15 @@ var KanaInput = React.createClass({
 
     var logic = this.props.logic || defaultLogic
     var next = logic(this.state)
+
+    var debug = true
+    if(debug){ //debug
+      var hist = this.state.history || []
+      hist.push(this.state.value)
+      next.history = hist
+      console.log(hist)
+    }
+
     this.setState(next, () => {
       this.onUpdate()
     })
