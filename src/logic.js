@@ -51,12 +51,11 @@ var build = function(state){
 }
 module.exports = function(state){
   var next = build(state)
-  var n = {
+  return {
     pairs : next.pairs || state.pairs || [],
     kana : next.kana || state.kana || "",
     cache : next.cache || state.cache || {},
     // store prev value
     prev : state.value,
   }
-  return n
 }
