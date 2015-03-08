@@ -1,37 +1,35 @@
 var japanese = require("japanese")
 var rekana = require("../lib/rekana")
-var hiragana = require("../lib/hiragana")
+var kanachar = require("../lib/kanachar")
 var diff = require("../lib/diff")
 
-var isConvertDiff = function(d){
-  return d.removed && d.added
+var buildConvertDict = function(prev, current, dic){
+  var diffPack = diff(prev, current)
+  dic = dic || []
+  diffPack.forEach(function(d){
+    if(!d.removed || !d.added){
+      return
+    }
+    if(kanachar(d.added)){
+      return
+    }
+    dic.push([d.added, d.removed])
+  })
+  return dic
 }
-
 var build = function(state){
   var prev = japanese.hiraganize(state.prev || "")
   var current = japanese.hiraganize(state.value || "")
   if(prev === current){ // no change
     return state
   }
-  var diffPack = diff(prev, current)
-  // analyse
-  var stack = state.stack || []
-  diffPack.forEach(function(d){
-    if(!isConvertDiff(d)){
-      return
-    }
-    if(hiragana.isHiragana(d.added)){
-      return
-    }
-    stack.push([d.added, d.removed])
-  })
-
-  var converted = rekana(current, stack)
-  if(!hiragana.isHiragana(converted)){
+  var dict = buildConvertDict(prev, current, state.dict)
+  var converted = rekana(current, dict)
+  if(!kanachar(converted)){
     converted = state.kana
   }
   var next = {
-    stack : stack,
+    dict : dict,
     kana : converted,
   }
   return next

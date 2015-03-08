@@ -10,9 +10,9 @@ describe("logic", function(){
     var expect = {
       kana : "やまだ",
       prev : "山田",
-      stack : [["山田", "やまだ"]]
+      dict : [["山田", "やまだ"]]
     }
-    assert.deepEqual(expect.stack, next.stack)
+    assert.deepEqual(expect.dict, next.dict)
     assert.deepEqual(expect, next)
   })
 })

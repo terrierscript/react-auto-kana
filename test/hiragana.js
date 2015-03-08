@@ -1,25 +1,25 @@
-var hiragana = require("../lib/hiragana")
+var kanachar = require("../lib/kanachar")
 var assert = require("power-assert")
 
 describe("hiragana", function(){
   describe("is_hiragana", function(){
     it("noraml", function(){
-      assert.equal(true, hiragana.isHiragana("あいう"))
+      assert.equal(true, kanachar("あいう"))
     })
     it("kanji", function(){
-      assert.equal(false, hiragana.isHiragana("山田"))
+      assert.equal(false, kanachar("山田"))
     })
     it("kanji + hiragana", function(){
-      assert.equal(false, hiragana.isHiragana("山田たろう"))
+      assert.equal(false, kanachar("山田たろう"))
     })
     it("ー", function(){
-      assert.equal(true, hiragana.isHiragana("すーぱー"))
+      assert.equal(true, kanachar("すーぱー"))
     })
     it("with space", function(){
-      assert.equal(true, hiragana.isHiragana("やまだ　たろう"))
+      assert.equal(true, kanachar("やまだ　たろう"))
     })
     it("with harf space", function(){
-      assert.equal(true, hiragana.isHiragana("やまだ たろう"))
+      assert.equal(true, kanachar("やまだ たろう"))
     })
   })
 })
