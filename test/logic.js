@@ -45,6 +45,10 @@ describe("logic", function(){
     var steps = ["ｙ" , "や"]
     stepTest(steps, "や")
   })
+  it("やｍ -> やま", function(){
+    var steps = ["ｙ" , "や", "やｍ", "やま"]
+    stepTest(steps, "やま")
+  })
   it("まりお -> 鞠男 -> 毬男", function(){
     var steps = ["まりお" ,"鞠男", "毬男"]
     stepTest(steps, "まりお")
@@ -71,5 +75,18 @@ describe("logic", function(){
   it("Dokaben scenario", function(){
     var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎"]
     stepTest(steps, "やまだたろう")
+  })
+  it("SuperMario1 scenario", function(){
+    var steps = ["ｓ", "す", "すｈ", "すは", "素破", "素破",
+    "素破ｍ", "素破ま", "素破まｒ", "素破まり",
+    "素破まりお", "素破真理雄", "素破万里緒",
+    "素破毬男", "素破マリヲ", "素破鞠男"]
+    stepTest(steps, "すはまりお")
+  })
+  it("SuperMario2 scenario", function(){
+    var steps = [
+    "まりお", "真理雄", "まりを", "万里緒",
+    "毬男", "鞠男"]
+    stepTest(steps, "まりお")
   })
 })
