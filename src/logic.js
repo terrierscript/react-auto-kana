@@ -1,51 +1,57 @@
 var japanese = require("japanese")
-var kanadic = require("./kanadic")
-var rekana = require("./rekana")
-var isHiragana = require("./is_hiragana")
+var rekana = require("../lib/rekana")
+var kanachar = require("../lib/kanachar")
+var diff = require("../lib/diff")
 
-var onlyKana = function(value){
-  var m = value.match(japanese.hiraganaRegex)
-  return m ? m.join("") : ""
-}
+var buildConvertDict = function(prev, current, dic){
+  var diffPack = diff(prev, current)
+  dic = dic || []
+  diffPack.forEach(function(d){
+    if(!d.removed || !d.added){
+      return
+    }
+    var pairDic = [d.added, d.removed]
+    if(kanachar(d.added) && !kanachar(d.removed)){
+      var rk = rekana.revert(current, [pairDic].concat(dic))
+      if(kanachar(rk)
+        && rk.length === d.added.length
+        && rk !== d.added){
+        dic.unshift([d.added, rk])
+        return
+      }
+    }
+    if(!kanachar(d.removed)){
+      var reverted = rekana.revert(d.removed, dic)
+      if(kanachar(reverted)){
+        dic.unshift([d.added, reverted])
+      }
+      return
+    }
+    dic.unshift(pairDic)
 
-var buildKana = function(dic, value){
-  var kana = value
-  // convert with dic
-  Object.keys(dic).forEach(function(key){
-    var val = dic[key]
-    kana = kana.replace(key, val)
   })
-  return onlyKana(kana)
+  return dic
 }
-
 var build = function(state){
   var prev = japanese.hiraganize(state.prev || "")
   var current = japanese.hiraganize(state.value || "")
-  var dic = state.dic || {}
-  var kana = state.kana || ""
-  // hiragana and katakana
-  if(prev === current){
+  if(prev === current){ // no change
     return state
   }
-  dic = kanadic(prev, current, dic)
-
-  var newKana = rekana(current, dic)
-  if(isHiragana(newKana)){
-    kana = newKana
+  var dict = buildConvertDict(prev, current, state.dict)
+  var converted = rekana(current, dict)
+  if(!kanachar(converted)){
+    converted = state.kana
   }
-
-  var nextState = {
-    kana : kana,
-    dic : dic,
+  var next = {
+    dict : dict,
+    kana : converted,
   }
-  return nextState
+  return next
 }
-
 module.exports = function(state){
-  console.log(state.prev, state.value, state.dic)
   var next = build(state)
   // store prev value
   next.prev = state.value
-
   return next
 }
