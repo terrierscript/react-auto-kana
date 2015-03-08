@@ -22,7 +22,9 @@ var Example = React.createClass({
     return (
       <div>
         <div>
+          <span>Input:</span>
           <KanaInput onUpdate={this.onUpdateKana} />
+          <span>Kana:</span>
           <input name="kana" value={this.state.kana} onChange={this.onChange} />
         </div>
       </div>
