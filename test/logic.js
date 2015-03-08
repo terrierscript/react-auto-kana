@@ -1,6 +1,16 @@
 var assert = require("power-assert")
 var logic = require("../src/logic")
 
+var stepTest = function(steps, kana){
+  var result = steps.reduce(function(state, value){
+    state.value = value
+    var result = logic(state)
+    // console.log(result)
+    return result
+  }, {})
+  assert.equal(kana, result.kana)
+
+}
 describe("logic", function(){
   it("convert", function(){
     var next = logic({
@@ -31,23 +41,21 @@ describe("logic", function(){
     })
     assert.deepEqual("やまだたろう", next.kana)
   })
+  it("ｙ -> や XXX", function(){
+    var steps = ["ｙ" , "や"]
+    stepTest(steps, "や")
+  })
   it("まりお -> 鞠男 -> 毬男", function(){
     var steps = ["まりお" ,"鞠男", "毬男"]
-    steps.reduce(function(state, value){
-      state.value = value
-      var result = logic(state)
-      assert.equal("まりお", result.kana)
-      return result
-    }, {})
+    stepTest(steps, "まりお")
   })
   it("not お -> を", function(){
-    // var steps = ["まりお" ,"まりを","鞠男", "毬男"]
-    // steps.reduce(function(state, value){
-    //   state.value = value
-    //   var result = logic(state)
-    //   assert.equal("まりお", result.kana)
-    //   return result
-    // }, {})
+    var steps = ["まりお","まりを","鞠男", "毬男"]
+    stepTest(steps, "まりお")
+  })
+  it("not お -> を part2", function(){
+    var steps = ["まりお","鞠男", "まりを", "毬男"]
+    stepTest(steps, "まりお")
   })
   it("remove", function(){
     var next = logic({

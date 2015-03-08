@@ -13,7 +13,7 @@ var buildConvertDict = function(prev, current, dic){
     if(kanachar(d.added)){
       return
     }
-    dic.push([d.added, d.removed])
+    dic.unshift([d.added, d.removed])
   })
   return dic
 }
