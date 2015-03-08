@@ -37,5 +37,6 @@ module.exports.replaceConvert = function(value, dic){
   dic.concat().reverse().forEach(function(d){
     value = value.replace(d[0], d[1])
   })
+  // console.log("repla", oldV, value, dic)
   return value
 }

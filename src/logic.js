@@ -65,6 +65,7 @@ var build2 = function(state){
     return state
   }
   var diffPack = diff(prev, current)
+  console.log(JSON.stringify(diffPack))
   // analyse
   var stack = state.stack || []
   var bornes = state.bornes || []
@@ -76,31 +77,33 @@ var build2 = function(state){
       return
     }
     stack.push([d.added, d.removed])
-    var newKana = rekana.replaceConvert(d.added, stack)
+    var newKana = rekana(d.added, stack)
     //console.log(newKana, d.added, JSON.stringify(stack))
     bornes.push({
       kana : newKana,
       value : d.added
     })
   })
-  console.log(JSON.stringify(bornes))
-  // generate structure
-  // generate kana
-  var kana = []
-  diffPack.forEach(function(d){
-    if(d.value){
-      kana.push(rekana(d.value, stack))
-    }
-    if(d.added){
-      kana.push(rekana(d.added, stack))
-    }
-  })
+  //console.log(JSON.stringify(bornes))
+  var converted = rekana(current, stack)
+  // console.log("ZZZ", prev, current, converted)
+  // // generate structure
+  // // generate kana
+  // var kana = []
+  // diffPack.forEach(function(d){
+  //   if(d.value){
+  //     kana.push(rekana(d.value, stack))
+  //   }
+  //   if(d.added){
+  //     kana.push(rekana(d.added, stack))
+  //   }
+  // })
   // console.log(prev, current, kana)
   // console.log(diffPack)
   // console.log(JSON.stringify(stack))
   var next = {
     stack : stack,
-    kana : kana.join(""),
+    kana : converted, //kana.join(""),
     bornes : bornes
   }
   return next
