@@ -1,6 +1,5 @@
 rm -rf pages
 npm run page
-npm run page-build
 ( cd pages
 
 git init

@@ -29,7 +29,8 @@
     "lint": "eslint js/**/*.jsx",
     "server": "harp server example",
     "page-build": "browserify example/compare.jsx > pages/dist/build.js",
-    "page": "harp compile example pages",
+    "page-compile": "harp compile example pages",
+    "page" : " npm run page-compile; npm run page-build",
     "watch": "watchify -v -d example/compare.jsx -o example/dist/build.js",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader"
   },
