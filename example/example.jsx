@@ -1,5 +1,5 @@
 var React = require("react")
-var KanaInput = require("../dist/index")
+var AutoKana = require("../src/AutoKana")
 
 var Example = React.createClass({
   getInitialState(){
@@ -23,7 +23,7 @@ var Example = React.createClass({
       <div>
         <div>
           <span>Input:</span>
-          <KanaInput onUpdate={this.onUpdateKana} />
+          <AutoKana onUpdate={this.onUpdateKana} />
           <span>Kana:</span>
           <input name="kana" value={this.state.kana} onChange={this.onChange} />
         </div>

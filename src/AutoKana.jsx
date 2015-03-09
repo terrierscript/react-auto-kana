@@ -15,9 +15,7 @@ var KanaInput = React.createClass({
     }
   },
   getInitialState(){
-    var clean = this.getCleanValue()
-    clean.value = this.props.initialValue || ""
-    return clean
+    return this.getCleanValue()
   },
   updateState(){
     if(!this.state.value){

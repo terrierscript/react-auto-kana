@@ -1,8 +1,8 @@
 {
-  "name": "react-kana-input",
+  "name": "react-auto-kana",
   "version": "0.0.1",
   "description": "",
-  "homepage" : "http://suisho.github.io/react-kana-input/example/www/",
+  "homepage" : "http://suisho.github.io/react-auto-kana/example/www/",
   "main": "src/KanaInput.jsx",
   "dependencies": {
     "compact-diff": "0.0.1",
