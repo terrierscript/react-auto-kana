@@ -1,13 +1,13 @@
 # React Kana Input
-[![Circle CI](https://circleci.com/gh/suisho/react-kana-input.svg?style=svg)](https://circleci.com/gh/suisho/react-kana-input)
+[![Circle CI](https://circleci.com/gh/suisho/react-auto-kana.svg?style=svg)](https://circleci.com/gh/suisho/react-auto-kana)
 
 > Japanese React Kana Input Component
 
-## Example
+## Usage Example
 
 ```js
 var React = require("react")
-var KanaInput = require("react-kana-input")
+var KanaInput = require("react-auto-kana")
 
 var Example = React.createClass({
   getInitialState(){
@@ -40,9 +40,12 @@ var Example = React.createClass({
 module.exports = Example
 ```
 
+### props
 - `onUpdate`
-  - callback after generated kana
-  - `data.kana` : Furigana
+  - Callback after generated kana
+  - `data.kana` : Generated kana value
+
+If you want get Katakana, you can use [japanese](http://npmjs.org/japanese) module.
 
 # Known Issue
-- 同じ漢字が入力された場合の挙動
+- Invalid behavor when same Kanji is input.
