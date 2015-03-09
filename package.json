@@ -29,7 +29,7 @@
     "lint": "eslint js/**/*.jsx",
     "server": "harp server example",
     "watch": "watchify -v -d example/compare.jsx -t babelify -o example/dist/build.js",
-    "test": "mocha --compilers js:babel/register --require intelli-espower-loader",
+    "test": "mocha --compilers js:babel/register --require intelli-espower-loader"
   },
   "keywords": ["react", "react-component"],
   "author": "suisho",
