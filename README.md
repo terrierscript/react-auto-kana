@@ -39,3 +39,10 @@ var Example = React.createClass({
 })
 module.exports = Example
 ```
+
+- `onUpdate`
+  - callback after generated kana
+  - `data.kana` : Furigana
+
+# Known Issue
+- 同じ漢字が入力された場合の挙動
