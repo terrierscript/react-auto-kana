@@ -38,7 +38,7 @@
     "page" : " npm run page-compile; npm run page-build",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader"
   },
-  "keywords": ["react", "react-component"],
+  "keywords": ["react", "react-component", "input", "japanese"],
   "author": "suisho",
   "license": "ISC",
   "browserify": {
