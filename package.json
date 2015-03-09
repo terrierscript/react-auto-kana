@@ -2,7 +2,7 @@
   "name": "react-auto-kana",
   "version": "0.0.1",
   "description": "Build Japanese Furigana from input values",
-  "homepage" : "http://suisho.github.io/react-auto-kana/example/www/",
+  "homepage": "http://suisho.github.io/react-auto-kana/example/www/",
   "main": "src/KanaInput.jsx",
   "dependencies": {
     "compact-diff": "^0.0.2",
@@ -24,6 +24,7 @@
     "espower-loader": "^0.10.0",
     "harp": "^0.15.2",
     "intelli-espower-loader": "^0.6.0",
+    "jsx": "^0.9.89",
     "minimist": "^1.1.0",
     "power-assert": "^0.10.2",
     "reactify": "^1.0.0",
@@ -35,14 +36,21 @@
     "page-build": "browserify example/main.jsx > pages/dist/build.js",
     "page-compile": "harp compile example pages",
     "watch": "watchify -v -d example/main.jsx -o example/dist/build.js",
-    "page" : " npm run page-compile; npm run page-build",
+    "page": " npm run page-compile; npm run page-build",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader"
   },
-  "keywords": ["react", "react-component", "input", "japanese"],
+  "keywords": [
+    "react",
+    "react-component",
+    "input",
+    "japanese"
+  ],
   "author": "suisho",
   "license": "ISC",
   "browserify": {
-    "transform" : ["babelify"],
+    "transform": [
+      "babelify"
+    ],
     "fullPaths": false
   }
 }
