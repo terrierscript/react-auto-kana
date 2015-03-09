@@ -3,6 +3,9 @@
 
 > Japanese React Kana Input Component
 
+## Demo
+[Live Demo](http://suisho.github.io/react-auto-kana/)
+
 ## Installation
 ```
 npm install -S react-auto-kana
