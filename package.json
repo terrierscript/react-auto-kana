@@ -30,13 +30,14 @@
     "server": "harp server example",
     "page-build": "browserify example/compare.jsx > pages/dist/build.js",
     "page": "harp compile example pages",
-    "watch": "watchify -v -d example/compare.jsx -t babelify -o example/dist/build.js",
+    "watch": "watchify -v -d example/compare.jsx -o example/dist/build.js",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader"
   },
   "keywords": ["react", "react-component"],
   "author": "suisho",
   "license": "ISC",
   "browserify": {
+    "transform" : ["babelify"],
     "fullPaths": false
   }
 }
