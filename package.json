@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Build Japanese Furigana from input values",
   "homepage": "http://suisho.github.io/react-auto-kana/example/www/",
-  "main": "index.js",
+  "main": "dist/index.js",
   "dependencies": {
     "compact-diff": "^0.0.2",
     "diff": "^1.3.0",
