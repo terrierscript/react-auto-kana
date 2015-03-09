@@ -1,0 +1,11 @@
+example
+legacy
+pages
+test
+.eslintrc
+.eslintignore
+.gitattribute
+.gitignore
+circle.yml
+gh-pages.sh
+npm-debug.log
