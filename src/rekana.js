@@ -1,26 +1,27 @@
 var kanachar = require("./kanachar")
 
-var replaceKana = function(value, dic){
-  dic.concat().reverse().forEach(function(d){
-    if(!kanachar(d[1])){
+var revertToKana = function(value, pairs){
+  pairs.concat().reverse().forEach(function(pair){
+    if(!kanachar(pair[1])){
       return
     }
-    value = value.replace(d[0], d[1])
+    value = value.replace(pair[0], pair[1])
   })
   return value
 }
-var revert = function(value, dic){
-  dic.concat().reverse().forEach(function(d){
-    value = value.replace(d[0], d[1])
+var revert = function(value, pairs){
+  //pairs.concat().reverse().forEach(function(pair){
+  pairs.concat().forEach(function(pair){
+    value = value.replace(pair[0], pair[1])
   })
   return value
 }
 
-module.exports = function(value, dic){
-  value = revert(value, dic)
-  return replaceKana(value, dic)
+module.exports = function(value, pairs){
+  value = revert(value, pairs)
+  return revertToKana(value, pairs)
 }
 
-module.exports.revert = function(value, dic){
-  return revert(value, dic)
+module.exports.revert = function(value, pairs){
+  return revert(value, pairs)
 }
