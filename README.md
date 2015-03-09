@@ -1,13 +1,17 @@
-# React Kana Input
+# React Auto Kana
 [![Circle CI](https://circleci.com/gh/suisho/react-auto-kana.svg?style=svg)](https://circleci.com/gh/suisho/react-auto-kana)
 
 > Japanese React Kana Input Component
 
+## Installation
+```
+npm install -S react-auto-kana
+```
 ## Usage Example
 
 ```js
 var React = require("react")
-var KanaInput = require("react-auto-kana")
+var AutoKana = require("react-auto-kana")
 
 var Example = React.createClass({
   getInitialState(){
@@ -30,7 +34,7 @@ var Example = React.createClass({
     return (
       <div>
         <div>
-          <KanaInput onUpdate={this.onUpdateKana} />
+          <AutoKana onUpdate={this.onUpdateKana} />
           <input name="kana" value={this.state.kana} onChange={this.onChange} />
         </div>
       </div>
