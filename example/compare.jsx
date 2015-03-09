@@ -49,7 +49,7 @@ var CompareExample = React.createClass({
         <div className="kana-block">
           <h3>今回の実装</h3>
           <div>Kana: {this.state.defaultState.kana}</div>
-          <h3><a href="http://rubricks.org/autoKana.html">autoKana</a>っぽい実装</h3>
+          <h3>なんちゃって<a href="http://rubricks.org/autoKana.html">autoKana</a>実装</h3>
           <div>Kana: {this.state.legacyState.kana}</div>
         </div>
       </div>

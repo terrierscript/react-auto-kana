@@ -1,22 +1,44 @@
+// http://app.coolors.co/e6eed6-dde2c6-bbc5aa-a72608-090c02
+blocks = #e6eed6;
+middleColor= #dde2c6;
+bg= #bbc5aa;
+impactColor= #a72608;
+fontColor = #090c02;
+
 *
   box-sizing: border-box
 body
-  background : #ccc;
+  background : bg;
+  font-family : 'Cuprum'
 a
-  color : black;
+  color : fontColor;
+.heading
+  text-align : center;
+h1
+  font-family : 'Oswald', cursive;
+  font-size : 48px;
+h1 a,
+h2,
+h3
+  color : impactColor;
+  font-weight : 700
+
 .container
   margin : 2em auto;
-  width : 30em;
+  width : 40em;
   h3
     font-size: 14px;
 .block
-  background : #fff;
+  background : blocks;
   border-radius : 5px;
   padding : 2em;
+  margin-bottom: 1em;
 input
+  font-size : 1em;
   padding : 0.5em;
   margin : 1em;
-
+  border-radius: 5px;
+  border : 1px solid middleColor;
 button
   padding : 0.5em;
   margin : 1em;
