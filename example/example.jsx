@@ -1,6 +1,6 @@
 var React = require("react")
 var AutoKana = require("../index")
-
+console.log(AutoKana)
 var Example = React.createClass({
   getInitialState(){
     return {
