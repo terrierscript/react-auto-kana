@@ -41,6 +41,12 @@ var getMode = function(prev, current){
     }
   }
 }
+var convertPair = function(prev, current){
+  var diffPack = diff(prev, current)
+  return diffPack.filter(function(d){
+    return (d.added || d.removed)
+  })
+}
 var build = function(state){
   var prev = japanese.hiraganize(state.prev || "")
   var current = japanese.hiraganize(state.value || "")
@@ -49,6 +55,7 @@ var build = function(state){
   }
   var prevMode = state.mode
   var mode = getMode(prev, current)
+  console.log(mode, prev, current, convertPair(prev, current))
   // 完全一致の文字列が過去に存在した場合は、cacheを利用
   // 下記挙動の場合の対処も兼ねる
   // ex: 山田 -> 山 -> 山田
