@@ -28,13 +28,13 @@ var KanaInput = React.createClass({
     var logic = this.props.logic || defaultLogic
     var next = logic(this.state)
 
-    var debug = true
-    if(debug){ //debug
-      var hist = this.state.history || []
-      hist.push(this.state.value)
-      next.history = hist
-      console.log(hist)
-    }
+    // var debug = true
+    // if(debug){ //debug
+    //   var hist = this.state.history || []
+    //   hist.push(this.state.value)
+    //   next.history = hist
+    //   console.log(hist)
+    // }
 
     this.setState(next, () => {
       this.onUpdate()
@@ -56,6 +56,7 @@ var KanaInput = React.createClass({
   },
   render(){
     return <input
+      {...this.props}
       value={this.state.value}
       onChange={this.onChange}
     />
