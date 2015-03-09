@@ -1,27 +1,39 @@
 // http://app.coolors.co/e6eed6-dde2c6-bbc5aa-a72608-090c02
-blocks = #e6eed6;
-middleColor= #dde2c6;
-bg= #bbc5aa;
-impactColor= #a72608;
-fontColor = #090c02;
+// http://app.coolors.co/0c090d-e01a4f-ccdbdc-f7f7ff-4ba3c3
+// http://app.coolors.co/253b3d-e01a4f-f7f7ff-ccdbdc-4ba3c3
+$color1= #253B3D;
+$color2= #e01a4f;
+$color3= #ccdbdc;
+$color4= #f7f7ff;
+$color5= #4ba3c3;
+
+$blocks       = $color3;
+$bg           = $color4;
+$middleColor  = $color5;
+$impactColor  = $color2;
+$fontColor    = $color1;
 
 *
   box-sizing: border-box
 body
-  background : bg;
+  background : $bg;
   font-family : 'Cuprum'
-a
-  color : fontColor;
+  color: $fontColor;
 .heading
   text-align : center;
-h1
-  font-family : 'Oswald', cursive;
-  font-size : 48px;
-h1 a,
+  h1
+    font-family : 'Oswald', cursive;
+    font-size : 48px;
+    margin-bottom: 0px;
+    a
+      color : $impactColor;
+      font-weight : 700
+  pre
+    margin-top 0px;
+
 h2,
 h3
-  color : impactColor;
-  font-weight : 700
+  color : $middleColor;
 
 .container
   margin : 2em auto;
@@ -29,7 +41,7 @@ h3
   h3
     font-size: 14px;
 .block
-  background : blocks;
+  background : $blocks;
   border-radius : 5px;
   padding : 2em;
   margin-bottom: 1em;
@@ -38,7 +50,7 @@ input
   padding : 0.5em;
   margin : 1em;
   border-radius: 5px;
-  border : 1px solid middleColor;
+  border : 1px solid $middleColor;
 button
   padding : 0.5em;
   margin : 1em;

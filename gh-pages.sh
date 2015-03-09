@@ -1,7 +1,7 @@
 rm -rf pages
 npm run page
 ( cd pages
-
+cp ../circle.yml ./circle.yml
 git init
 git add .
 git commit -m "auto commit with gh-pages.sh"

@@ -2,7 +2,6 @@ var defaultLogic = require("../src/logic")
 var legacyLogic = require("../legacy/legacy_logic")
 
 var React = require("react")
-var Example = require("./example.jsx")
 
 var CompareExample = React.createClass({
   getCleanValue(){
@@ -57,5 +56,4 @@ var CompareExample = React.createClass({
   }
 })
 
-React.render(<CompareExample/>, document.getElementById("container"))
-React.render(<Example/>, document.getElementById("normaly-container"))
+module.exports = CompareExample

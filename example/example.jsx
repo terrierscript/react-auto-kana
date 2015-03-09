@@ -23,7 +23,7 @@ var Example = React.createClass({
       <div>
         <div>
           <span>Input:</span>
-          <AutoKana onUpdate={this.onUpdateKana} />
+          <AutoKana onUpdate={this.onUpdateKana} placeholder="Input here!"/>
           <span>Kana:</span>
           <input name="kana" value={this.state.kana} onChange={this.onChange} />
         </div>
