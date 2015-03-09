@@ -28,6 +28,7 @@
   "scripts": {
     "lint": "eslint js/**/*.jsx",
     "server": "harp server example",
+    "page": "harp compile example",
     "watch": "watchify -v -d example/compare.jsx -t babelify -o example/dist/build.js",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader"
   },
