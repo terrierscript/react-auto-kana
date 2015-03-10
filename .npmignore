@@ -1,7 +1,7 @@
-example
-legacy
-pages
-test
+example/
+legacy/
+pages/
+test/
 .eslintrc
 .eslintignore
 .gitattribute
