@@ -2,6 +2,7 @@ var japanese = require("japanese")
 var rekana = require("./rekana")
 var kanachar = require("./kanachar")
 var diff = require("compact-diff")
+var extend = require("extend")
 
 var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
@@ -56,7 +57,9 @@ var build = function(state){
   }
   var prevMode = state.mode
   var mode = getMode(prev, current)
-  console.log(prevMode, mode, prev, current, convertPair(prev, current))
+  var stacks = state.stacks || []
+  if(prevMode !== "added" && mode === "added"){
+  }
   // 完全一致の文字列が過去に存在した場合は、cacheを利用
   // 下記挙動の場合の対処も兼ねる
   // ex: 山田 -> 山 -> 山田
@@ -82,11 +85,13 @@ var build = function(state){
 }
 module.exports = function(state){
   var next = build(state)
-  return {
-    pairs : next.pairs || state.pairs || [],
-    kana : next.kana || state.kana || "",
-    cache : next.cache || state.cache || {},
-    mode : next.mode || state.mode || {},
-    prev : state.value,
+  var defaults = {
+    pairs :  [],
+    kana  :  "",
+    cache : {},
+    mode  :  {},
   }
+  return extend(defaults, state, next, {
+    prev : state.value
+  })
 }
