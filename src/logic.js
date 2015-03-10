@@ -16,8 +16,8 @@ var convertPairs = function(prev, current, pairs){
     }else{
       // 下記のような変遷をたどった場合の対応策
       // ex: お -> を -> お
-      var emulatePair = [pair].concat(pairs)
-      var reverted = rekana(current, emulatePair)
+      var emulatePairs = [pair].concat(pairs)
+      var reverted = rekana(current, emulatePairs)
       if(kanachar(reverted)){
         pairs.unshift([d.added, d.removed])
       }
@@ -55,7 +55,7 @@ var build = function(state){
   }
   var prevMode = state.mode
   var mode = getMode(prev, current)
-  console.log(mode, prev, current, convertPair(prev, current))
+  console.log(prevMode, mode, prev, current, convertPair(prev, current))
   // 完全一致の文字列が過去に存在した場合は、cacheを利用
   // 下記挙動の場合の対処も兼ねる
   // ex: 山田 -> 山 -> 山田
@@ -85,6 +85,7 @@ module.exports = function(state){
     pairs : next.pairs || state.pairs || [],
     kana : next.kana || state.kana || "",
     cache : next.cache || state.cache || {},
+    mode : next.mode || state.mode || {},
     prev : state.value,
   }
 }
