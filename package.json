@@ -27,6 +27,7 @@
     "jsx": "^0.9.89",
     "minimist": "^1.1.0",
     "power-assert": "^0.10.2",
+    "react-json-inspector": "^4.2.1",
     "reactify": "^1.0.0",
     "watchify": "^2.3.0"
   },
