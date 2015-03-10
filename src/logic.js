@@ -41,6 +41,7 @@ var getMode = function(prev, current){
     }
   }
 }
+
 var convertPair = function(prev, current){
   var diffPack = diff(prev, current)
   return diffPack.filter(function(d){
