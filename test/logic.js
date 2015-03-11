@@ -80,7 +80,7 @@ describe("logic", function(){
     var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山", "山ｄ", "山だ", "山田", "山田", "山田ｔ", "山田た", "山田た"]
     stepTest(steps, "やまだた")
   })
-  it("SuperMario1 scenario", function(){
+  todo("SuperMario1 scenario", function(){
     var steps = ["ｓ", "す", "すｈ", "すは", "素破", "素破",
     "素破ｍ", "素破ま", "素破まｒ", "素破まり",
     "素破まりお", "素破真理雄", "素破万里緒",
