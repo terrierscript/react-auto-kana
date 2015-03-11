@@ -4,6 +4,16 @@ var kanachar = require("./kanachar")
 var diff = require("compact-diff")
 var stemora = require("stemora")
 
+// を === お
+var isSameKana = function(str1, str2){
+  if(!kanachar(str1)){
+    return false
+  }
+  if(!kanachar(str2)){
+    return false
+  }
+  return (stemora.normalize(str1) === stemora.normalize(str2))
+}
 var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
   pairs = pairs || []
@@ -13,6 +23,9 @@ var convertPairs = function(prev, current, pairs){
     }
     var pair = [d.added, d.removed]
     if(kanachar(d.removed)){
+      if(kanachar(d.added) && !isSameKana(d.added, d.removed)){
+        return
+      }
       pairs.unshift(pair)
     }else{
       // 下記のような変遷をたどった場合の対応策
@@ -20,9 +33,10 @@ var convertPairs = function(prev, current, pairs){
       var emulatePair = [pair].concat(pairs)
       var reverted = rekana(current, emulatePair)
       if(kanachar(reverted)){
-        if(stemora.normalize(reverted) === stemora.normalize(d.added)){
-          pairs.unshift([d.added, d.removed])
+        if(kanachar(d.added) && stemora.normalize(reverted) !== stemora.normalize(d.added)){
+          return
         }
+        pairs.unshift([d.added, d.removed])
       }
     }
   })
