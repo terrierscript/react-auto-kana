@@ -54,7 +54,7 @@ describe("logic", function(){
     var steps = ["まりお" ,"鞠男", "毬男"]
     stepTest(steps, "まりお")
   })
-  it("not お -> を XXX", function(){
+  it("not お -> を", function(){
     var steps = ["まりお","まりを","鞠男", "毬男"]
     stepTest(steps, "まりお")
   })
@@ -77,7 +77,7 @@ describe("logic", function(){
     var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎"]
     stepTest(steps, "やまだたろう")
   })
-  it("Yamada Removed scenario", function(){
+  todo("Yamada Removed scenario", function(){
     var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山", "山ｄ", "山だ", "山田", "山田", "山田ｔ", "山田た", "山田た"]
     stepTest(steps, "やまだた")
   })

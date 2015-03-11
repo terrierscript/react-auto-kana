@@ -15,6 +15,7 @@ var isSameKana = function(str1, str2){
   }
   return (stemora.normalize(str1) === stemora.normalize(str2))
 }
+
 var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
   pairs = pairs || []
