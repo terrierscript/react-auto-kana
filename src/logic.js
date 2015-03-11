@@ -2,7 +2,8 @@ var japanese = require("japanese")
 var rekana = require("./rekana")
 var kanachar = require("./kanachar")
 var diff = require("compact-diff")
-var kanamora = require("./kanamora")
+var stemora = require("stemora")
+
 var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
   pairs = pairs || []
@@ -14,15 +15,14 @@ var convertPairs = function(prev, current, pairs){
     if(kanachar(d.removed)){
       pairs.unshift(pair)
     }else{
-      if(kanachar(current)){
-        return
-      }
       // 下記のような変遷をたどった場合の対応策
       // ex: お -> を -> お
       var emulatePair = [pair].concat(pairs)
       var reverted = rekana(current, emulatePair)
       if(kanachar(reverted)){
-        pairs.unshift([d.added, d.removed])
+        if(stemora.normalize(reverted) === stemora.normalize(d.added)){
+          pairs.unshift([d.added, d.removed])
+        }
       }
     }
   })
