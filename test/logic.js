@@ -101,4 +101,9 @@ describe("logic", function(){
     var steps = ["う", "うｂ", "うぶ", "生", "生", "生ｎ", "生な", "生なｍ", "生なま", "生生", "生生", "生生ｓ", "生生せ", "生生せい", "生生生", "生生生"]
     stepTest(steps, "うぶなませい")
   }*/)
+  it("Mobile Convert", function(){
+    // In mobile app. input by char
+    var steps = ["や", "やま", "やまた", "やまだ", "山田"]
+    stepTest(steps, "山田")
+  })
 })
