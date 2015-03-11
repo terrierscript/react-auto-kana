@@ -1,5 +1,6 @@
 rm -rf pages
-npm run page
+npm run page-compile
+npm run page-build
 ( cd pages
 cp ../circle.yml ./circle.yml
 git init
