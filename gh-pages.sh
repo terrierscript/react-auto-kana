@@ -4,6 +4,7 @@ npm run page-build
 (
 cd pages
 cp ../circle.yml ./circle.yml
+echo '{"test" : ""}' > package.json
 git init
 git add .
 git commit -m "auto commit with gh-pages.sh"
