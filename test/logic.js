@@ -1,7 +1,7 @@
 var assert = require("power-assert")
 var logic = require("../src/logic")
 var isCi = process.env.CI ? true : false
-var itNotCi = (isCi ? it.skip: it)
+var todo = (isCi ? it.skip: it)
 var stepTest = function(steps, kana){
   var result = steps.reduce(function(state, value){
     state.value = value
@@ -81,7 +81,7 @@ describe("logic", function(){
     var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山", "山ｄ", "山だ", "山田", "山田", "山田ｔ", "山田た", "山田た"]
     stepTest(steps, "やまだた")
   })
-  it("SuperMario1 scenario", function(){
+  todo("SuperMario1 scenario", function(){
     var steps = ["ｓ", "す", "すｈ", "すは", "素破", "素破",
     "素破ｍ", "素破ま", "素破まｒ", "素破まり",
     "素破まりお", "素破真理雄", "素破万里緒",
@@ -98,12 +98,17 @@ describe("logic", function(){
     var steps = ["ｍ", "ま", "まｒ", "まり", "まりお", "真理夫", "万里夫", "真理雄", "マリヲ", "万里緒", "鞠男"]
     stepTest(steps, "まりお")
   })
-  itNotCi("Same Kanji scenario ", function(){
+  todo("Same Kanji scenario ", function(){
     var steps = ["う", "うｂ", "うぶ", "生", "生", "生ｎ", "生な", "生なｍ", "生なま", "生生", "生生", "生生ｓ", "生生せ", "生生せい", "生生生", "生生生"]
     stepTest(steps, "うぶなませい")
   })
-  itNotCi("Same Kana and add Kanji scenario SKIPCI", function(){
+  todo("Same Kana and add Kanji scenario SKIPCI", function(){
     var steps = ["ｍ", "み", "みｚ", "みず", "水", "水部", "水部", "水部ｔ", "水部た", "水部たｒ", "水部たろ", "水部たろう", "水部太郎", "水部太郎"]
     stepTest(steps, "みずたろう")
+  })
+  it("Mobile Convert", function(){
+    // In mobile app. input by char
+    var steps = ["や", "やま", "やまた", "やまだ", "山田"]
+    stepTest(steps, "やまだ")
   })
 })

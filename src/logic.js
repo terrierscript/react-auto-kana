@@ -3,7 +3,18 @@ var rekana = require("./rekana")
 var kanachar = require("./kanachar")
 var diff = require("compact-diff")
 var extend = require("extend")
+var stemora = require("stemora")
 
+// を === お
+var isSameKana = function(str1, str2){
+  if(!kanachar(str1)){
+    return false
+  }
+  if(!kanachar(str2)){
+    return false
+  }
+  return (stemora.normalize(str1) === stemora.normalize(str2))
+}
 var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
   pairs = pairs || []
@@ -13,6 +24,10 @@ var convertPairs = function(prev, current, pairs){
     }
     var pair = [d.added, d.removed]
     if(kanachar(d.removed)){
+      // for mobile. convert directory like やまた -> やまだ
+      if(kanachar(d.added) && !isSameKana(d.added, d.removed)){
+        return
+      }
       pairs.unshift(pair)
     }else{
       // 下記のような変遷をたどった場合の対応策
@@ -20,6 +35,9 @@ var convertPairs = function(prev, current, pairs){
       var emulatePairs = [pair].concat(pairs)
       var reverted = rekana(current, emulatePairs)
       if(kanachar(reverted)){
+        if(kanachar(d.added) && !isSameKana(d.added, reverted)){
+          return
+        }
         pairs.unshift([d.added, d.removed])
       }
     }
