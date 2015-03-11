@@ -1,5 +1,5 @@
 var React = require("react")
-var AutoKana = require("../src/AutoKana.jsx")
+var AutoKana = require("../index.js")
 
 var Debugger = React.createClass({
   getInitialState(){
