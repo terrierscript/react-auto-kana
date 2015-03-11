@@ -108,7 +108,7 @@ describe("logic", function(){
   })
   it("Mobile Convert", function(){
     // In mobile app. input by char
-    var steps = ["や", "やま", "やまた", "やまだ", "山田"]
+    var steps = ["", "や", "やま", "やまた", "やまだ", "山田"]
     stepTest(steps, "やまだ")
   })
 })
