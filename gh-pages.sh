@@ -1,7 +1,8 @@
 rm -rf pages
 npm run page-compile
 npm run page-build
-( cd pages
+(
+cd pages
 cp ../circle.yml ./circle.yml
 git init
 git add .
