@@ -23,6 +23,7 @@ var convertPairs = function(prev, current, pairs){
     }
     var pair = [d.added, d.removed]
     if(kanachar(d.removed)){
+      // for mobile. convert directory like やまた -> やまだ
       if(kanachar(d.added) && !isSameKana(d.added, d.removed)){
         return
       }
@@ -33,7 +34,7 @@ var convertPairs = function(prev, current, pairs){
       var emulatePair = [pair].concat(pairs)
       var reverted = rekana(current, emulatePair)
       if(kanachar(reverted)){
-        if(kanachar(d.added) && stemora.normalize(reverted) !== stemora.normalize(d.added)){
+        if(kanachar(d.added) && !isSameKana(d.added, reverted)){
           return
         }
         pairs.unshift([d.added, d.removed])
