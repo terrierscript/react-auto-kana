@@ -2,7 +2,7 @@ var japanese = require("japanese")
 var rekana = require("./rekana")
 var kanachar = require("./kanachar")
 var diff = require("compact-diff")
-
+var kanamora = require("./kanamora")
 var convertPairs = function(prev, current, pairs){
   var diffPack = diff(prev, current)
   pairs = pairs || []
@@ -14,6 +14,9 @@ var convertPairs = function(prev, current, pairs){
     if(kanachar(d.removed)){
       pairs.unshift(pair)
     }else{
+      if(kanachar(current)){
+        return
+      }
       // 下記のような変遷をたどった場合の対応策
       // ex: お -> を -> お
       var emulatePair = [pair].concat(pairs)
