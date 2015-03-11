@@ -1,35 +1,40 @@
 var compactDiff = require("compact-diff")
+
+var convert = function(arr){
+  return arr.map(function(v){
+    return {
+      value : v
+    }
+  })
+}
+
 module.exports = function(splits, value){
   var rest = value
-  var diffSplit = []
-  var post = []
-  var pre = []
-  var v, i, reg
+  var spl = convert(splits)
   // 前方
-  for(i = 0; i < splits.length; i++){
-    v = splits[i]
-    reg = new RegExp("^" + v)
-    if(!reg.match(rest)){
-      diffSplit.unshift(rest)
-      break;
+  for(let i = 0; i < spl.length; i++){
+    let part = spl[i]
+    let v = part.value
+    let reg = new RegExp("^" + v)
+    if(!reg.test(rest)){
+      spl[i].diff = true
+      break
     }
     rest = rest.replace(reg, "")
-    post.push({
-      value : v
-    })
   }
 
-  for(i = 0; i < splits.length; i++){
-    v = splits[splits.length - i - 1]
-    reg = new RegExp(v + "$")
-    if(!reg.match(rest)){
-      diffSplit.push(rest)
-      return
+  for(let i = 0; i < splits.length; i++){
+    let part = spl[splits.length - i - 1]
+    let v = part.v
+    let reg = new RegExp(v + "$")
+    if(!reg.test(rest)){
+      spl[i].diff = true
+      break
     }
     rest = rest.replace(reg, "")
-    pre.unshift({
-      value : v
-    })
   }
-  
+  spl.forEach(function(part){
+
+  })
+  return spl
 }

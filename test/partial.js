@@ -1,11 +1,12 @@
 var partial = require("../src/partial")
-describe(function(){
+describe("partial", function(){
   it("simple", function(){
     var result = partial(["山田", "たろう"], "山田太郎")
     var expect = [
       { value : "山田" },
       { value : "たろう", changed : "太郎"}
     ]
+    console.log(result)
   })
   it("simple", function(){
     var result = partial(["山田", "たろう"], "山たろう")
