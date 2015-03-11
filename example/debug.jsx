@@ -5,25 +5,26 @@ var Debugger = React.createClass({
   getInitialState(){
     return {
       kana : "",
-      kanaMode : ""
+      kanaMode : "",
+      history : []
     }
   },
   onUpdateKana(data){
     var mode = this.state.kanaMode
-    console.log(mode, data)
+    var history = this.state.history || []
+    console.log(history)
+    history.push(data.value)
     this.setState({
       kana : data.kana,
       prevMode : mode,
       kanaMode : data.mode,
       data : data,
-      dataDump : JSON.stringify(data, null, "  ")
+      dataDump : JSON.stringify(data, null, "  "),
+      history : history,
+      historyDump : JSON.stringify(history)
+
     })
     // this.props.onChange(this.state)
-  },
-  onChange(e){
-    this.setState({
-      kana : e.target.value,
-    })
   },
   render(){
     //var b = ();
@@ -38,6 +39,11 @@ var Debugger = React.createClass({
             Mode: <span>{this.state.prevMode} || {this.state.kanaMode}</span>
           </div>
           <div>
+            <pre>
+              <code>
+                {this.state.historyDump}
+              </code>
+            </pre>
             <pre>
               <code>
                 {this.state.dataDump}

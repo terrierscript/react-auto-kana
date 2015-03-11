@@ -34,10 +34,10 @@
   "scripts": {
     "lint": "eslint js/**/*.jsx",
     "example": "harp server example",
+    "watch": "mkdir -p example/dist; watchify -v -d example/main.jsx -o example/dist/build.js",
     "page-build": "browserify example/main.jsx > pages/dist/build.js",
     "page-compile": "harp compile example pages",
-    "watch": "mkdir -p example/dist; watchify -v -d example/main.jsx -o example/dist/build.js",
-    "page": " npm run page-compile; npm run page-build",
+    "page": "./gh-pages.sh",
     "test": "mocha --compilers js:babel/register --require intelli-espower-loader",
     "dist": "mkdir -p dist ; rm dist/*.js; babel src/AutoKana.jsx > dist/index.js; cp src/*.js dist/"
   },
