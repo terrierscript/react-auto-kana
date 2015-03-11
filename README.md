@@ -54,5 +54,12 @@ module.exports = Example
 
 If you want get Katakana, you can use [japanese](http://npmjs.org/japanese) module.
 
+# Run demo localy
+
+```
+npm run example
+```
+
 # Known Issue
 - Invalid behavor when same Kanji is input.
+- Mobile(た -> だ)
