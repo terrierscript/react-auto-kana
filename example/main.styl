@@ -14,7 +14,7 @@ $impactColor  = $color2;
 $fontColor    = $color1;
 
 $width = 40em
-$breakpoint = 320px
+$breakpoint = 40em
 
 *
   box-sizing: border-box
@@ -62,7 +62,8 @@ button
   margin : 1em;
   border-radius : 0.5em;
 
-.input-block
+.input-block,
+.debug-block,
 .kana-block
   vertical-align: top;
   width : 50%
@@ -73,3 +74,7 @@ button
 .ribbon
   @media screen and (max-width: $breakpoint)
     display none
+
+pre
+  code
+    word-break: break-word;
