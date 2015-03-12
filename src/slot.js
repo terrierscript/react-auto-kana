@@ -2,6 +2,7 @@ var japanese = require("japanese")
 var rekana = require("./rekana")
 var kanachar = require("./kanachar")
 var diff = require("compact-diff")
+var extend = require("extend")
 var stemora = require("stemora")
 
 // を === お
@@ -33,8 +34,8 @@ var generatePatches = function(prev, current, patches){
     }else{
       // 下記のような変遷をたどった場合の対応策
       // ex: お -> を -> お
-      var emulatePair = [pair].concat(patches)
-      var reverted = rekana(current, emulatePair)
+      var emulatePatches = [pair].concat(patches)
+      var reverted = rekana(current, emulatePatches)
       if(kanachar(reverted)){
         if(kanachar(d.added) && !isSameKana(d.added, reverted)){
           return
@@ -45,6 +46,7 @@ var generatePatches = function(prev, current, patches){
   })
   return patches
 }
+
 
 var build = function(state){
   var prev = japanese.hiraganize(state.prev || "")
@@ -59,6 +61,7 @@ var build = function(state){
   if(cache[current]){
     return { kana : cache[current] }
   }
+
   // default
   var patches = generatePatches(prev, current, state.patches)
   //console.log(state.prev, state.value, patches)
@@ -75,12 +78,16 @@ var build = function(state){
   }
 }
 
+
+
 module.exports = function(state){
   var next = build(state)
-  return {
-    kana : next.kana || state.kana || "",
-    patches : next.patches || state.patches || [],
-    cache : next.cache || state.cache || {},
-    prev : state.value,
+  var defaults = {
+    pairs :  [],
+    kana  :  "",
+    cache : {},
   }
+  return extend(defaults, state, next, {
+    prev : state.value
+  })
 }
