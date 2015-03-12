@@ -16,7 +16,7 @@ var isSameKana = function(str1, str2){
 }
 
 // dirty...
-var convertPairs = function(prev, current, patches){
+var generatePatches = function(prev, current, patches){
   var diffPack = diff(prev, current)
   patches = patches || []
   diffPack.forEach(function(d){
@@ -76,7 +76,7 @@ var build = function(state){
     return { kana : cache[current] }
   }
   // default
-  var patches = convertPairs(prev, current, state.patches)
+  var patches = generatePatches(prev, current, state.patches)
   //console.log(state.prev, state.value, patches)
   var converted = rekana(current, patches)
   if(!kanachar(converted)){
