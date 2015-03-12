@@ -1,6 +1,6 @@
 var assert = require("power-assert")
 var logic = require("../src/logic")
-
+var todo = process.env.CI ? it.skip : it
 var stepTest = function(steps, kana){
   var result = steps.reduce(function(state, value){
     state.value = value
