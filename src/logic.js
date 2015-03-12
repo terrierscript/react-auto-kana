@@ -14,9 +14,9 @@ var isSameKana = function(str1, str2){
   }
   return (stemora.normalize(str1) === stemora.normalize(str2))
 }
-var convertPairs = function(prev, current, pairs){
+var convertPairs = function(prev, current, patches){
   var diffPack = diff(prev, current)
-  pairs = pairs || []
+  patches = patches || []
   diffPack.forEach(function(d){
     if(!d.removed || !d.added){ // skip if not pair
       return
@@ -27,21 +27,21 @@ var convertPairs = function(prev, current, pairs){
       if(kanachar(d.added) && !isSameKana(d.added, d.removed)){
         return
       }
-      pairs.unshift(pair)
+      patches.unshift(pair)
     }else{
       // 下記のような変遷をたどった場合の対応策
       // ex: お -> を -> お
-      var emulatePair = [pair].concat(pairs)
+      var emulatePair = [pair].concat(patches)
       var reverted = rekana(current, emulatePair)
       if(kanachar(reverted)){
         if(kanachar(d.added) && !isSameKana(d.added, reverted)){
           return
         }
-        pairs.unshift([d.added, d.removed])
+        patches.unshift([d.added, d.removed])
       }
     }
   })
-  return pairs
+  return patches
 }
 
 var getMode = function(prev, current){
@@ -75,25 +75,26 @@ var build = function(state){
     return { kana : cache[current] }
   }
   // default
-  var pairs = convertPairs(prev, current, state.pairs)
-  //console.log(state.prev, state.value, pairs)
-  var converted = rekana(current, pairs)
+  var patches = convertPairs(prev, current, state.patches)
+  //console.log(state.prev, state.value, patches)
+  var converted = rekana(current, patches)
   if(!kanachar(converted)){
     converted = state.kana
   }else{
     cache[current] = converted
   }
   return {
-    pairs : pairs,
+    patches : patches,
     kana : converted,
     cache : cache,
     mode : mode
   }
 }
+
 module.exports = function(state){
   var next = build(state)
   return {
-    pairs : next.pairs || state.pairs || [],
+    patches : next.patches || state.patches || [],
     kana : next.kana || state.kana || "",
     cache : next.cache || state.cache || {},
     prev : state.value,

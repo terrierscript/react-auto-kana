@@ -24,7 +24,7 @@ describe("logic", function(){
       value: "山田た",
       kana : "やまだ",
       prev : "山田",
-      pairs : [
+      patches : [
         ["山田" , "やまだ"]
       ]
     })
@@ -35,7 +35,7 @@ describe("logic", function(){
       prev : "山田たろう",
       value: "山田太郎",
       kana : "やまだたろう",
-      pairs : [
+      patches : [
         ["山田" , "やまだ"]
       ]
     })
