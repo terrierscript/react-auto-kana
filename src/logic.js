@@ -14,6 +14,8 @@ var isSameKana = function(str1, str2){
   }
   return (stemora.normalize(str1) === stemora.normalize(str2))
 }
+
+// dirty...
 var convertPairs = function(prev, current, patches){
   var diffPack = diff(prev, current)
   patches = patches || []
@@ -65,7 +67,6 @@ var build = function(state){
   if(prev === current){ // no change
     return {}
   }
-  var prevMode = state.mode
   var mode = getMode(prev, current)
   // 完全一致の文字列が過去に存在した場合は、cacheを利用
   // 下記挙動の場合の対処も兼ねる
