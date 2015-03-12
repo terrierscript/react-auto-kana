@@ -1,5 +1,5 @@
 var assert = require("power-assert")
-var logic = require("../src/logic")
+var slot = require("../src/slot")
 var kanaLogic = require("../src/kana")
 var todo = process.env.CI ? it.skip : it
 var stepTest = function(steps, kana){
@@ -15,14 +15,14 @@ var stepTest = function(steps, kana){
 describe("logics", function(){
   describe("slot logic", function(){
     it("convert", function(){
-      var next = logic({
+      var next = slot({
         value: "山田",
         prev : "やまだ"
       })
       assert.deepEqual("やまだ", next.kana)
     })
     it("add", function(){
-      var next = logic({
+      var next = slot({
         value: "山田た",
         kana : "やまだ",
         prev : "山田",
@@ -33,7 +33,7 @@ describe("logics", function(){
       assert.deepEqual("やまだた", next.kana)
     })
     it("山田たろう -> 山田太郎", function(){
-      var next = logic({
+      var next = slot({
         prev : "山田たろう",
         value: "山田太郎",
         kana : "やまだたろう",
@@ -42,6 +42,17 @@ describe("logics", function(){
         ]
       })
       assert.deepEqual("やまだたろう", next.kana)
+    })
+    it("remove", function(){
+      var next = slot({
+        value: "山",
+        kana : "やまだ",
+        prev : "山田",
+        pairs : [
+          ["山田" , "やまだ"]
+        ]
+      })
+      assert.deepEqual("やまだ", next.kana) // not change
     })
   })
   describe("E2E", function(){
@@ -64,17 +75,6 @@ describe("logics", function(){
     it("not お -> を part2", function(){
       var steps = ["まりお","鞠男", "まりを", "毬男"]
       stepTest(steps, "まりお")
-    })
-    it("remove", function(){
-      var next = logic({
-        value: "山",
-        kana : "やまだ",
-        prev : "山田",
-        pairs : [
-          ["山田" , "やまだ"]
-        ]
-      })
-      assert.deepEqual("やまだ", next.kana) // not change
     })
     it("Dokaben scenario", function(){
       var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎"]

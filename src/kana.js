@@ -1,5 +1,5 @@
 var extend = require("extend")
-var slotLogic = require("./logic")
+var slotLogic = require("./slot")
 var buildKana = function(slots){
   return slots.map(function(slot){
     return slot.kana
