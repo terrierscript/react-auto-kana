@@ -78,8 +78,8 @@ var build = function(state){
 module.exports = function(state){
   var next = build(state)
   return {
-    patches : next.patches || state.patches || [],
     kana : next.kana || state.kana || "",
+    patches : next.patches || state.patches || [],
     cache : next.cache || state.cache || {},
     prev : state.value,
   }

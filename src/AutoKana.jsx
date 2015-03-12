@@ -1,6 +1,6 @@
 var React = require("react")
 
-var defaultLogic = require("./logic")
+var kanaLogic = require("./kana")
 
 var KanaInput = React.createClass({
   propType : {
@@ -23,7 +23,7 @@ var KanaInput = React.createClass({
       return
     }
 
-    var logic = this.props.logic || defaultLogic
+    var logic = this.props.logic || kanaLogic
     var next = logic(this.state)
 
     // var debug = true
