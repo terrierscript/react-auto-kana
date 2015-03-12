@@ -46,28 +46,12 @@ var generatePatches = function(prev, current, patches){
   return patches
 }
 
-var getMode = function(prev, current){
-  var diffPack = diff(prev, current)
-  for(var i = 0; i < diffPack.length; i++){
-    var d = diffPack[i]
-    if(d.added && d.removed){
-      return "convert"
-    }
-    if(d.added){
-      return "added"
-    }
-    if(d.removed){
-      return "removed"
-    }
-  }
-}
 var build = function(state){
   var prev = japanese.hiraganize(state.prev || "")
   var current = japanese.hiraganize(state.value || "")
   if(prev === current){ // no change
     return {}
   }
-  var mode = getMode(prev, current)
   // 完全一致の文字列が過去に存在した場合は、cacheを利用
   // 下記挙動の場合の対処も兼ねる
   // ex: 山田 -> 山 -> 山田
@@ -88,7 +72,6 @@ var build = function(state){
     patches : patches,
     kana : converted,
     cache : cache,
-    mode : mode
   }
 }
 
