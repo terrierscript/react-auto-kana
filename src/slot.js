@@ -36,12 +36,13 @@ var generatePatches = function(prev, current, patches){
       // ex: お -> を -> お
       var emulatePatches = [pair].concat(patches)
       var reverted = rekana(current, emulatePatches)
-      if(kanachar(reverted)){
-        if(kanachar(d.added) && !isSameKana(d.added, reverted)){
-          return
-        }
-        patches.unshift([d.added, d.removed])
+      if(!kanachar(reverted)){
+        return
       }
+      if(kanachar(d.added) && !isSameKana(d.added, reverted)){
+        return
+      }
+      patches.unshift([d.added, d.removed])
     }
   })
   return patches
