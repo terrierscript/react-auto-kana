@@ -1,4 +1,4 @@
-
+// wip
 var getMode = function(prev, current){
   var diffPack = diff(prev, current)
   for(var i = 0; i < diffPack.length; i++){
