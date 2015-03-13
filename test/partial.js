@@ -34,6 +34,20 @@ describe("partial", function(){
     })
   })
   describe("added", function(){
+    it("first add", function(){
+      var result = partial.add([], "山田")
+      var expect = [
+        { value : "", changed : "山田" },
+      ]
+      assert.deepEqual(result, expect)
+    })
+    it("add", function(){
+      var result = partial.add(["や"], "やｍ")
+      var expect = [
+        { value : "や", changed : "やｍ" },
+      ]
+      assert.deepEqual(result, expect)
+    })
     it("after add", function(){
       var result = partial.add(["山田", "太郎"], "山田太郎ドカベン")
       var expect = [
