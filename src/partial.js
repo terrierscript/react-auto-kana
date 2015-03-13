@@ -8,37 +8,42 @@ var convert = function(arr){
   })
 }
 
-var preFilter = function(spl, rest){
-  for(var i = 0; i < spl.length; i++){
-    var part = spl[i]
-    var reg = new RegExp("^" + part.value)
+var preFilter = function(slots, rest){
+  var filterd = slots.map(function(slot){
+    var reg = (new RegExp("^" + slot.value))
     if(!reg.test(rest)){
-      break
+      return slot
     }
-    spl[i].matched = true
+    slot.matched = true
     rest = rest.replace(reg, "")
-  }
+    return slot
+  })
   return {
-    slots : spl,
+    slots : filterd,
     rest : rest
   }
 }
 
-var postFilter = function(spl, rest){
-  for(var i = 0; i < spl.length; i++){
-    var last = spl.length - i - 1
-    var part = spl[last]
-    var reg = new RegExp(part.value + "$")
+var postFilter = function(slots, rest){
+  var filterd = slots.reverse().map(function(slot){
+    var reg = new RegExp(slot.value + "$")
     if(!reg.test(rest)){
-      break
+      return slot
     }
-    spl[last].matched = true
+    slot.matched = true
     rest = rest.replace(reg, "")
-  }
+    return slot
+  }).reverse()
+
   return {
-    slots : spl,
+    slots : filterd,
     rest : rest
   }
+}
+var filter = function(slots, value){
+  var preFilterd = preFilter(slots, value)
+  var postFilterd = postFilter(preFilterd.slots, preFilterd.rest)
+  return postFilterd
 }
 
 module.exports.add = function(splits, value){
@@ -47,18 +52,14 @@ module.exports.add = function(splits, value){
 module.exports.convert = function(splits, value){
   var slots = convert(splits)
   // 前方
-  var preFilterd = preFilter(slots, value)
-  var postFilterd = postFilter(preFilterd.slots, preFilterd.rest)
-  //console.log(spl, value)
-  //console.log(spl, value, rest)
-  var rest = postFilterd.rest
-  return postFilterd.slots.map(function(parts){
+  var filterd = filter(slots, value)
+  return filterd.slots.map(function(parts){
     if(parts.matched){
       return {
         value : parts.value
       }
     }
-    parts.changed = rest
+    parts.changed = filterd.rest
     return parts
   })
 }
