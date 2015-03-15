@@ -15,21 +15,20 @@ var buildKana = function(slots){
 //   })
 // }
 
-var polyfill = function(state){
-  var slots = state.slots || []
-  var slot = extend({}, slots[0], {
-    value : state.value
+var polyfill = function(slot, value){
+  var _slot = extend({}, slot, {
+    value : value
   })
-  var next = slotLogic(slot)
+  var next = slotLogic(_slot)
   return [next]
 }
 
 module.exports = function(state){
-  var slots = polyfill(state)
+  var slots = polyfill((state.slots || [])[0] || {}, state.value)
   var cDiff = compactDiff(state.prev, state.value)
   var cache = state.cache || {}
-  // console.log("============")
-  // console.log(cDiff)
+  console.log("============")
+  console.log(cDiff)
   var processed = cDiff.map(function(diff){
     // console.log(slots[0].cache)
 
