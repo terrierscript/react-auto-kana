@@ -87,8 +87,10 @@ describe("logics", function(){
     todo("SuperMario1 scenario", function(){
       var steps = ["ｓ", "す", "すｈ", "すは", "素破", "素破",
       "素破ｍ", "素破ま", "素破まｒ", "素破まり",
-      "素破まりお", "素破真理雄", "素破万里緒",
-      "素破毬男", "素破マリヲ", "素破鞠男"]
+      "素破まりお", "素破真理雄"
+      // , "素破万里緒",
+      // "素破毬男", "素破マリヲ", "素破鞠男"
+      ]
       stepTest(steps, "すはまりお")
     })
     it("SuperMario2 scenario", function(){

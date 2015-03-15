@@ -84,7 +84,7 @@ var build = function(state){
 module.exports = function(state){
   var next = build(state)
   var defaults = {
-    pairs :  [],
+    patches :  [],
     kana  :  "",
     cache : {},
   }
