@@ -21,10 +21,7 @@ var revert = function(value, pairs){
 }
 
 module.exports = function(value, pairs){
-  console.log("===========")
-  console.log("::", value)
   value = revert(value, pairs)
-  
   return revertToKana(value, pairs)
 }
 
