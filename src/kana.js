@@ -25,15 +25,14 @@ var polyfill = function(state){
 }
 
 module.exports = function(state){
-  // var splits = state.splits || []
-  var cDiff = compactDiff(state.prev, state.value)
-  // console.log("=============")
-  // console.log(cDiff, state)
-  // /var partials = partial(splits, state.value)
-  // polyfill slots
   var slots = polyfill(state)
-
+  var cDiff = compactDiff(state.prev, state.value)
+  var cache = state.cache || {}
+  // console.log("============")
+  // console.log(cDiff)
   var processed = cDiff.map(function(diff){
+    // console.log(slots[0].cache)
+
     if(diff.value){
       // console.log(state.prev, diff)
       // return slotLogic({
@@ -57,5 +56,6 @@ module.exports = function(state){
     kana : buildKana(slots),
     slots : slots,
     prev : state.value,
+    cache : cache
   }
 }

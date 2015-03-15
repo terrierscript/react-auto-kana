@@ -25,6 +25,9 @@ var isEnablePatch = function(added, removed){
   if(!kanachar(added)){
     return true
   }
+  // for mobile : ex) やまた -> やまだ
+  // ["やまた" , "やまだ"] is invalid
+  // ["まりお" , "まりを"] is valid
   if(isSameKana(added, removed)){
     return true
   }
