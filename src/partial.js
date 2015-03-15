@@ -56,18 +56,23 @@ module.exports.add = function(splits, value){
   var slots = filterd.slots
   var init = []
   var restPartial = { value: "", changed : filterd.rest }
+  // first
   var firstSlot = slots[0]
   if(!firstSlot || firstSlot.preUnmatched){
     init.push(restPartial)
   }
-  var partials = slots.reduce(function(result, slot, i){
-    var before = slots[i - 1] || {}
-    if(before.preMatched && slot.postMatched){
+
+  // partials
+  var partials = slots.reduce(function(result, current, i){
+    var prev = slots[i - 1] || {}
+    if(prev.preMatched && current.postMatched){
       result.push(restPartial)
     }
-    result.push({value : slot.value})
+    result.push({value : current.value})
     return result
   }, init)
+
+  // last
   var lastSlot = slots[slots.length - 1]
   if(lastSlot && lastSlot.postUnmatched){
     partials.push(restPartial)

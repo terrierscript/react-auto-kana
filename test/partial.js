@@ -44,7 +44,8 @@ describe("partial", function(){
     it("add", function(){
       var result = partial.add(["や"], "やｍ")
       var expect = [
-        { value : "や", changed : "やｍ" },
+        { value : "や"},
+        { value : "", changed : "ｍ" },
       ]
       assert.deepEqual(result, expect)
     })
