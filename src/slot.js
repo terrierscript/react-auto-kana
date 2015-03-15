@@ -1,7 +1,7 @@
 var japanese = require("japanese")
 var rekana = require("./rekana")
 var kanachar = require("./kanachar")
-var diff = require("compact-diff")
+var compactDiff = require("compact-diff")
 var extend = require("extend")
 var stemora = require("stemora")
 
@@ -32,30 +32,29 @@ var isEnablePatch = function(added, removed){
   // }
   // return true
 }
-// dirty...
-var generatePatches = function(prev, current, patches){
-  var diffPack = diff(prev, current)
-  patches = patches || []
-  diffPack.forEach(function(d){
+
+var generatePatches = function(prev, current, initialPatches){
+  var diffPack = compactDiff(prev, current)
+  return diffPack.reduce(function(newPatches, d){
     if(!d.removed || !d.added){ // skip if falsy value
-      return
+      return newPatches
     }
 
-    // removed is kana
     var patch = [d.added, d.removed]
-    if(kanachar(d.removed) && isEnablePatch(d.added, d.removed)){
-      patches.unshift(patch)
-      return
+
+    // removed is kana
+    if(kanachar(d.removed) && !isEnablePatch(d.added, d.removed)){
+      return newPatches
     }
 
     // remove is not kana (revert emulation)
-    var reverted = emulatePatch(current, patch, patches)
-    if(isEnablePatch(d.added, reverted)){
-      patches.unshift(patch)
-      return
+    if(!kanachar(d.removed) && !isEnablePatch(d.added, emulatePatch(current, patch, newPatches))){
+      return newPatches
     }
-  })
-  return patches
+
+    newPatches.unshift(patch)
+    return newPatches
+  }, initialPatches || [])
 }
 
 
