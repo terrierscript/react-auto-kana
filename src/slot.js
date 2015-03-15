@@ -15,36 +15,44 @@ var isSameKana = function(str1, str2){
   }
   return (stemora.normalize(str1) === stemora.normalize(str2))
 }
-var emulation = function(patch, patches){
-  
+var emulatePatch = function(current, newPatch, patches){
+  var emulatePatches = [newPatch].concat(patches)
+  return rekana(current, emulatePatches)
+}
+
+var isEnablePatch = function(added, removed){
+  // if(kanachar(removed)){
+  if(!kanachar(added)){
+    return true
+  }
+  if(isSameKana(added, removed)){
+    return true
+  }
+  return false
+  // }
+  // return true
 }
 // dirty...
 var generatePatches = function(prev, current, patches){
   var diffPack = diff(prev, current)
   patches = patches || []
   diffPack.forEach(function(d){
-    if(!d.removed || !d.added){ // skip if not patch
+    if(!d.removed || !d.added){ // skip if falsy value
       return
     }
+
+    // removed is kana
     var patch = [d.added, d.removed]
-    if(kanachar(d.removed)){
-      // for mobile. convert directory like やまた -> やまだ
-      if(kanachar(d.added) && !isSameKana(d.added, d.removed)){
-        return
-      }
+    if(kanachar(d.removed) && isEnablePatch(d.added, d.removed)){
       patches.unshift(patch)
-    }else{
-      // 下記のような変遷をたどった場合の対応策
-      // ex: お -> を -> お
-      var emulatePatches = [patch].concat(patches)
-      var reverted = rekana(current, emulatePatches)
-      if(!kanachar(reverted)){
-        return
-      }
-      if(kanachar(d.added) && !isSameKana(d.added, reverted)){
-        return
-      }
+      return
+    }
+
+    // remove is not kana (revert emulation)
+    var reverted = emulatePatch(current, patch, patches)
+    if(isEnablePatch(d.added, reverted)){
       patches.unshift(patch)
+      return
     }
   })
   return patches
