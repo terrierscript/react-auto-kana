@@ -36,7 +36,7 @@ var isEnablePatch = function(added, removed){
   // return true
 }
 
-var generatePatches = function(prev, current, initialPatches){
+var generatePatches = function(prev, current, patches){
   var diffPack = compactDiff(prev, current)
   return diffPack.reduce(function(newPatches, d){
     if(!d.removed || !d.added){ // skip if falsy value
@@ -57,7 +57,7 @@ var generatePatches = function(prev, current, initialPatches){
 
     newPatches.unshift(patch)
     return newPatches
-  }, initialPatches || [])
+  }, patches || [])
 }
 
 
