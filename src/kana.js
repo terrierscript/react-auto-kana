@@ -15,29 +15,26 @@ var buildKana = function(slots){
 //   })
 // }
 
-var polyfill = function(slot, value){
+var polyfill = function(value, slot){
   var _slot = extend({}, slot, {
     value : value
   })
   var next = slotLogic(_slot)
-  return [next]
+  return next
 }
 
 module.exports = function(state){
-  var slots = polyfill((state.slots || [state.value])[0] || {}, state.value)
   var diffs = compactDiff(state.prev, state.value)
-  
-  // complete convert
-  // if(diffs.length === 1 && diffs[0].added && diffs[0].removed){
-  //   console.log("CCC", diffs)
-  // }
+  var splits = state.splits || []
   var cache = state.cache || {}
-  console.log(diffs, slots[0].kana)
   var processed = diffs.map(function(diff){
     // console.log(slots[0].cache)
 
     if(diff.value && cache[diff.value]){
-      console.log("Z", cache[diff.value], diff.value)
+      // console.log("Z", cache[diff.value], diff.value)
+      splits.push({
+        
+      })
       // console.log(state.prev, diff)
       // return slotLogic({
       //   value : diff.value,
@@ -54,14 +51,22 @@ module.exports = function(state){
       })
     }
   })
+
+  var slots = (state.slots || [{}])
+  var nextSlots = slots.map(function(slot){
+    // console.log(slots)
+    return polyfill(state.value, slot)
+  })
+  // console.log(nextSlots)
+
   // console.log(processed)
-  var kana = buildKana(slots)
+  var kana = buildKana(nextSlots)
   if(!kanachar(state.value)){
     cache[state.value] = kana
   }
   return {
     kana : kana,
-    slots : slots,
+    slots : nextSlots,
     prev : state.value,
     cache : cache
   }

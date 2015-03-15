@@ -104,7 +104,7 @@ describe("logics", function(){
       stepTest(steps, "まりお")
     })
     it("Same Kanji scenario", function(){
-      var steps = ["う", "うｂ", "うぶ", "生", "生", "生ｎ", "生な", "生なｍ", "生なま", "生生", "生生", "生生ｓ", "生生せ", "生生せい", "生生生", "生生生"]
+      var steps = ["う", "うｂ", "うぶ", "初", "生", "生ｎ", "生な", "生なｍ", "生なま", "生生", "生生", "生生ｓ", "生生せ", "生生せい", "生生生", "生生生"]
       stepTest(steps, "うぶなませい")
     })
     it.skip("first insertSame Kanji scenario (issue)", function(){
