@@ -11,11 +11,10 @@ var revertToKana = function(value, pairs){
 }
 var revert = function(value, pairs){
   pairs.concat().forEach(function(pair){
-    // 確率的には正しいが、非常に場当たり的
+    // 確率的にはうまく行きやすいが、かなり場当たり的
     var reg = new RegExp("(.*)(" + pair[0] + ")")
     value = value.replace(reg, "$1" + pair[1])
     // value = value.replace(pair[0], pair[1])
-    console.log(value)
   })
   return value
 }
