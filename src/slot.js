@@ -67,10 +67,12 @@ var build = function(state){
   var patches = generatePatches(prev, current, state.patches)
   //console.log(state.prev, state.value, patches)
   var converted = rekana(current, patches)
-  if(!kanachar(converted)){
-    converted = state.kana
+  if(kanachar(converted)){
+    if(!kanachar(current)){
+      cache[current] = converted
+    }
   }else{
-    cache[current] = converted
+    converted = state.kana
   }
   return {
     patches : patches,
