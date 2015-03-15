@@ -15,26 +15,28 @@ var isSameKana = function(str1, str2){
   }
   return (stemora.normalize(str1) === stemora.normalize(str2))
 }
-
+var emulation = function(patch, patches){
+  
+}
 // dirty...
 var generatePatches = function(prev, current, patches){
   var diffPack = diff(prev, current)
   patches = patches || []
   diffPack.forEach(function(d){
-    if(!d.removed || !d.added){ // skip if not pair
+    if(!d.removed || !d.added){ // skip if not patch
       return
     }
-    var pair = [d.added, d.removed]
+    var patch = [d.added, d.removed]
     if(kanachar(d.removed)){
       // for mobile. convert directory like やまた -> やまだ
       if(kanachar(d.added) && !isSameKana(d.added, d.removed)){
         return
       }
-      patches.unshift(pair)
+      patches.unshift(patch)
     }else{
       // 下記のような変遷をたどった場合の対応策
       // ex: お -> を -> お
-      var emulatePatches = [pair].concat(patches)
+      var emulatePatches = [patch].concat(patches)
       var reverted = rekana(current, emulatePatches)
       if(!kanachar(reverted)){
         return
@@ -42,7 +44,7 @@ var generatePatches = function(prev, current, patches){
       if(kanachar(d.added) && !isSameKana(d.added, reverted)){
         return
       }
-      patches.unshift([d.added, d.removed])
+      patches.unshift(patch)
     }
   })
   return patches
