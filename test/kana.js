@@ -14,46 +14,46 @@ var stepTest = function(steps, kana){
 }
 describe("logics", function(){
   describe("slot logic", function(){
-    it("convert", function(){
-      var next = slot({
-        value: "山田",
-        prev : "やまだ"
-      })
-      assert.deepEqual("やまだ", next.kana)
-    })
-    it("add", function(){
-      var next = slot({
-        value: "山田た",
-        kana : "やまだ",
-        prev : "山田",
-        patches : [
-          ["山田" , "やまだ"]
-        ]
-      })
-      assert.deepEqual("やまだた", next.kana)
-    })
-    it("山田たろう -> 山田太郎", function(){
-      var next = slot({
-        prev : "山田たろう",
-        value: "山田太郎",
-        kana : "やまだたろう",
-        patches : [
-          ["山田" , "やまだ"]
-        ]
-      })
-      assert.deepEqual("やまだたろう", next.kana)
-    })
-    it("remove", function(){
-      var next = slot({
-        value: "山",
-        kana : "やまだ",
-        prev : "山田",
-        pairs : [
-          ["山田" , "やまだ"]
-        ]
-      })
-      assert.deepEqual("やまだ", next.kana) // not change
-    })
+    // it("convert", function(){
+    //   var next = slot({
+    //     value: "山田",
+    //     prev : "やまだ"
+    //   })
+    //   assert.deepEqual("やまだ", next.kana)
+    // })
+    // it("add", function(){
+    //   var next = slot({
+    //     value: "山田た",
+    //     kana : "やまだ",
+    //     prev : "山田",
+    //     patches : [
+    //       ["山田" , "やまだ"]
+    //     ]
+    //   })
+    //   assert.deepEqual("やまだた", next.kana)
+    // })
+    // it("山田たろう -> 山田太郎", function(){
+    //   var next = slot({
+    //     prev : "山田たろう",
+    //     value: "山田太郎",
+    //     kana : "やまだたろう",
+    //     patches : [
+    //       ["山田" , "やまだ"]
+    //     ]
+    //   })
+    //   assert.deepEqual("やまだたろう", next.kana)
+    // })
+    // it("remove", function(){
+    //   var next = slot({
+    //     value: "山",
+    //     kana : "やまだ",
+    //     prev : "山田",
+    //     pairs : [
+    //       ["山田" , "やまだ"]
+    //     ]
+    //   })
+    //   assert.deepEqual("やまだ", next.kana) // not change
+    // })
   })
   describe("E2E", function(){
     it("XXX ｙ -> や", function(){
@@ -85,7 +85,7 @@ describe("logics", function(){
       stepTest(steps, "やまだた")
     })
     todo("SuperMario1 scenario", function(){
-      var steps = ["ｓ", "す", "すｈ", "すは", "素破", "素破",
+      var steps = ["ｓ", "す", "すｈ", "すは", "酢派", "酢破", "素破" ,
       "素破ｍ", "素破ま", "素破まｒ", "素破まり",
       "素破まりお", "素破真理雄"
       , "素破万里緒",
@@ -106,6 +106,10 @@ describe("logics", function(){
     it("Same Kanji scenario", function(){
       var steps = ["う", "うｂ", "うぶ", "生", "生", "生ｎ", "生な", "生なｍ", "生なま", "生生", "生生", "生生ｓ", "生生せ", "生生せい", "生生生", "生生生"]
       stepTest(steps, "うぶなませい")
+    })
+    it.skip("first insertSame Kanji scenario (issue)", function(){
+      var steps = ["","ｎ","な","なｍ","なま","生","生う","生うｂ","生うぶ","生生","ｓ生生","せ生生","せい生生","生生生"]
+      stepTest(steps, "せいなまうぶ")
     })
     it("Mobile Convert", function(){
       // In mobile app. input by char

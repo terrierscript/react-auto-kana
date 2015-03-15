@@ -74,7 +74,7 @@ var build = function(state){
   if(cache[current]){
     return { kana : cache[current] }
   }
-
+  // console.log(state.patches, state.cache)
   // default
   var patches = generatePatches(prev, current, state.patches)
   //console.log(state.prev, state.value, patches)
