@@ -103,10 +103,10 @@ describe("logics", function(){
       var steps = ["ｍ", "ま", "まｒ", "まり", "まりお", "真理夫", "万里夫", "真理雄", "マリヲ"]//, "万里緒"]
       stepTest(steps, "まりお")
     })
-    it("Same Kanji scenario"/*, function(){
+    it("Same Kanji scenario", function(){
       var steps = ["う", "うｂ", "うぶ", "生", "生", "生ｎ", "生な", "生なｍ", "生なま", "生生", "生生", "生生ｓ", "生生せ", "生生せい", "生生生", "生生生"]
       stepTest(steps, "うぶなませい")
-    }*/)
+    })
     it("Mobile Convert", function(){
       // In mobile app. input by char
       var steps = ["や", "やま", "やまた", "やまだ", "山田"]

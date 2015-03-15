@@ -15,25 +15,27 @@ var buildKana = function(slots){
 //   })
 // }
 
+var polyfill = function(state){
+  var slots = state.slots || []
+  var slot = extend({}, slots[0], {
+    value : state.value
+  })
+  var next = slotLogic(slot)
+  return [next]
+}
+
 module.exports = function(state){
   // var splits = state.splits || []
   var cDiff = compactDiff(state.prev, state.value)
-  console.log("=============")
+  // console.log("=============")
   // console.log(cDiff, state)
   // /var partials = partial(splits, state.value)
   // polyfill slots
-
-  // var slots = state.slots || []
-  // var slot = extend({}, slots[0], {
-  //   value : state.value
-  // })
-  // console.log(slot)
-  // var next = slotLogic(slot)
-  // var nextSlot = [next]
+  var slots = polyfill(state)
 
   var processed = cDiff.map(function(diff){
     if(diff.value){
-      console.log(state.prev, diff)
+      // console.log(state.prev, diff)
       // return slotLogic({
       //   value : diff.value,
       //   prev : state.prev,
@@ -49,11 +51,11 @@ module.exports = function(state){
       })
     }
   })
-  console.log(processed)
+  // console.log(processed)
 
   return {
-    kana : buildKana(processed),
-    // slots : nextSlot,
+    kana : buildKana(slots),
+    slots : slots,
     prev : state.value,
   }
 }
