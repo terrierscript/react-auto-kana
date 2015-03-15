@@ -28,6 +28,7 @@
   ],
   "rules": {
     "react/display-name": 1,
+    "no-underscore-dangle" : [0],
     "semi" : [2 , "never"],
     "strict" : false,
     "key-spacing" : [0, {

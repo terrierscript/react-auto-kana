@@ -88,4 +88,38 @@ describe("partial", function(){
       assert.deepEqual(result, expect)
     })
   })
+  describe("auto detect", function(){
+    it("as convert", function(){
+      var result = partial(["山田", "ｔ"], "山田た") // convert
+      var expect = [
+        { value : "山田" },
+        { value : "ｔ", changed : "た" }
+      ]
+      assert.deepEqual(result, expect)
+    })
+    it("as add", function(){
+      var result = partial(["山田"], "山田ｔ") // add
+      var expect = [
+        { value : "山田" },
+        { value : "", changed : "ｔ" }
+      ]
+      assert.deepEqual(result, expect)
+    })
+    it("as convert last", function(){
+      var result = partial(["山田", "た"], "山田たう")
+      var expect = [
+        { value : "山田" },
+        { value : "た", changed : "たう" }
+      ]
+      assert.deepEqual(result, expect)
+    })
+    it("as convert first", function(){
+      var result = partial(["山田", "太郎"], "お山田太郎")
+      var expect = [
+        { value : "山田", changed : "お山田"},
+        { value : "太郎" }
+      ]
+      assert.deepEqual(result, expect)
+    })
+  })
 })

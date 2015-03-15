@@ -1,6 +1,5 @@
-//var compactDiff = require("compact-diff")
-
-var convert = function(arr){
+var compactDiff = require("compact-diff")
+var toSlot = function(arr){
   return arr.map(function(v){
     return {
       value : v
@@ -37,25 +36,37 @@ var postFilter = function(slots, rest){
     slot.postMatched = true
     rest = rest.replace(reg, "")
     return slot
-  }).reverse()
+  })
 
+  return {
+    slots : filterd.reverse(),
+    rest : rest
+  }
+}
+
+var diffRestFilter = function(slots, rest, value){
+  var filterd = slots.map(function(slot){
+    var diff = compactDiff(slot.value, rest)
+    console.log(diff, slot.value, rest)
+    return slot
+  })
   return {
     slots : filterd,
     rest : rest
   }
 }
 var filter = function(splits, value){
-  var slots = convert(splits)
+  var slots = toSlot(splits)
   var preFilterd = preFilter(slots, value)
   var postFilterd = postFilter(preFilterd.slots, preFilterd.rest)
-  return postFilterd
+  var diffRested = diffRestFilter(postFilterd.slots, postFilterd.rest, value)
+  return diffRested
 }
 
-module.exports.add = function(splits, value){
-  var filterd = filter(splits, value)
-  var slots = filterd.slots
+var _add = function(slots, rest){
   var init = []
-  var restPartial = { value: "", changed : filterd.rest }
+  var restPartial = { value: "", changed : rest }
+
   // first
   var firstSlot = slots[0]
   if(!firstSlot || firstSlot.preUnmatched){
@@ -79,15 +90,38 @@ module.exports.add = function(splits, value){
   }
   return partials
 }
+var add = function(splits, value){
+  var slots = filter(splits, value)
+  return _add(slots.slots, slots.rest)
+}
 
-module.exports.convert = function(splits, value){
-  var filterd = filter(splits, value)
-  return filterd.slots.map(function(slot){
+var _convert = function(slots, rest){
+  return slots.map(function(slot){
     var partial = { value : slot.value }
     if(slot.matched){
       return partial
     }
-    partial.changed = filterd.rest
+    partial.changed = rest
     return partial
   })
 }
+
+var convert = function(splits, value){
+  var filtered = filter(splits, value)
+  return _convert(filtered.slots, filtered.rest)
+}
+
+var autoDetect = function(splits, value){
+  var filtered = filter(splits, value)
+  var allMatched = filtered.slots.every(function(slot){
+    return slot.matched
+  })
+  if(allMatched){
+    return _add(filtered.slots, filtered.rest)
+  }
+  return _convert(filtered.slots, filtered.rest)
+}
+module.exports = autoDetect
+
+module.exports.add = add
+module.exports.convert = convert

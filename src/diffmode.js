@@ -22,6 +22,9 @@ var diffmode = function(prev, current){
 module.exports = diffmode
 module.exports.isAddMode = function(prev, current, prevAdded){
   var dm = diffmode(prev, current)
+  if(!prev){
+    return true
+  }
   if(kanachar(prev) && dm === "added"){
     return false
   }
