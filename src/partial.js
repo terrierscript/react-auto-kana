@@ -47,7 +47,6 @@ var postFilter = function(slots, rest){
 var diffRestFilter = function(slots, rest, value){
   var filterd = slots.map(function(slot){
     var diff = compactDiff(slot.value, rest)
-    console.log(diff, slot.value, rest)
     return slot
   })
   return {

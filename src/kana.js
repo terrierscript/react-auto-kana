@@ -15,7 +15,7 @@ var buildKana = function(slots){
 //   })
 // }
 
-var polyfill = function(value, slot){
+var convertSlot = function(value, slot){
   var _slot = extend({}, slot, {
     value : value
   })
@@ -25,37 +25,39 @@ var polyfill = function(value, slot){
 
 module.exports = function(state){
   var diffs = compactDiff(state.prev, state.value)
-  var splits = state.splits || []
+  var splits = state.splits || {}
   var cache = state.cache || {}
-  var processed = diffs.map(function(diff){
-    // console.log(slots[0].cache)
+  var slots = state.slots || [{}]
+  console.log("==============")
 
+  var activeSplits = diffs.reduce(function(result, diff){
     if(diff.value && cache[diff.value]){
-      // console.log("Z", cache[diff.value], diff.value)
-      splits.push({
-        
-      })
-      // console.log(state.prev, diff)
-      // return slotLogic({
-      //   value : diff.value,
-      //   prev : state.prev,
-      //   cache : state.cache,
-      //   patches : state.patches,
-      // })
-    }else{
-      return slotLogic({
-        value : diff.added,
-        prev : diff.removed,
-        cache : state.cache,
-        patches : state.patches,
-      })
+      // slot確定
+      result.push(diff.value)
     }
+    console.log(diff)
+    return result
+  }, [])
+  var activeSlots = slots.filter(function(slot){
+    return activeSplits.every(function(split){
+      if(slot.value === split){
+        return false
+      }
+      return true
+    })
   })
+  console.log(activeSplits, activeSlots)
+  // var spls = Object.keys(splits).join("")
+  // var diff2 = compactDiff(spls, state.value)
+  // diff2.forEach(function(diff){
+  //   if(splits[diff.value] && splits[diff.value].kana){
+  //     return
+  //   }
+  //   console.log(diff)
+  // })
 
-  var slots = (state.slots || [{}])
-  var nextSlots = slots.map(function(slot){
-    // console.log(slots)
-    return polyfill(state.value, slot)
+  var nextSlots = activeSlots.map(function(slot){
+    return convertSlot(state.value, slot)
   })
   // console.log(nextSlots)
 
@@ -67,6 +69,7 @@ module.exports = function(state){
   return {
     kana : kana,
     slots : nextSlots,
+    splits : activeSplits,
     prev : state.value,
     cache : cache
   }
