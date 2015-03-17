@@ -24,6 +24,10 @@ describe("historikana", function(){
       var steps = ["ｙ" , "や", "やｍ", "やま"]
       stepTest(steps, "やま")
     })
+    it("やま -> やまｄ", function(){
+      var steps = ["ｙ" , "や", "やｍ", "やま", "やまｄ"]
+      stepTest(steps, "やま")
+    })
     it("まりお -> 鞠男 -> 毬男", function(){
       var steps = ["まりお" ,"鞠男", "毬男"]
       stepTest(steps, "まりお")
