@@ -1,7 +1,15 @@
 // TODO: customizable function
 // kanaとしての許容文字のみかどうかの判定
-module.exports = function(str){
+var kanaReg = "[ 　ぁあ-んー]"
+var isKana = function(str){
   str = str || ""
-  var reg = new RegExp("^[ 　ぁあ-んー]*$")
+  var reg = new RegExp("^" + kanaReg + "*$")
+  return reg.test(str)
+}
+module.exports = isKana
+module.exports.isKana = isKana
+module.exports.hasKana = function(str){
+  str = str || ""
+  var reg = new RegExp(kanaReg)
   return reg.test(str)
 }

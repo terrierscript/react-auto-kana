@@ -1,6 +1,12 @@
 var React = require("react")
+var historikana = require("./historikana")
 
-var kanaLogic = require("./kana")
+var logic = function(state){
+  var value = state.value
+  state.history.push(value)
+  state.kana = historikana(state.history)
+  return state
+}
 
 var KanaInput = React.createClass({
   propType : {
@@ -11,7 +17,8 @@ var KanaInput = React.createClass({
   getCleanValue(){
     return {
       kana: "",
-      value: ""
+      value: "",
+      history: []
     }
   },
   getInitialState(){
@@ -23,16 +30,8 @@ var KanaInput = React.createClass({
       return
     }
 
-    var logic = this.props.logic || kanaLogic
+    // var logic = this.props.logic || kanaLogic
     var next = logic(this.state)
-
-    // var debug = true
-    // if(debug){ //debug
-    //   var hist = this.state.history || []
-    //   hist.push(this.state.value)
-    //   next.history = hist
-    //   console.log(hist)
-    // }
 
     this.setState(next, () => {
       this.onUpdate()
