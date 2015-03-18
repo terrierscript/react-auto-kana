@@ -14,25 +14,29 @@ var isSameKana = function(str1, str2){
 
 var detectPartialize = function(reversed, groups){
   var head = reversed[0]
-  var left, center, right
   // 分解を特定する
-  reversed.forEach(function(value, i){
+  var split = reversed.reduce(function(result, value, i){
     var reg = new RegExp("(.*)" + value + "(.*)")
     if(!reg.test(head) || head === value){
-      return
+      return result
     }
     // var matched = reg.exec(head)
     // var leftMatch = matched[1]
     // var rightMatch = matched[2]
-    left = reversed.slice(0, i - 1).map(function(val){
+    var left = reversed.slice(0, i - 1).map(function(val){
       return val.replace(value, "")
     })
-    right = reversed.slice(i, reversed.length - 1)
-  })
-  if(left && left.length > 0 || right && right.length){ // center && center)
-    // recursive
-    detectPartialize(right, groups)
-    detectPartialize(left, groups)
+    var right = reversed.slice(i, reversed.length - 1)
+    if(left && left.length > 0 || right && right.length){
+      result.left = left
+      result.right = right
+    }
+    return result
+  }, {left : null, right : null})
+
+  if(split.left && split.right){ // center && center)
+    detectPartialize(split.right, groups)
+    detectPartialize(split.left, groups)
   }else{
     groups.push(reversed)
   }

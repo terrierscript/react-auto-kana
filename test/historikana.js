@@ -24,7 +24,7 @@ describe("historikana", function(){
       var steps = ["ｙ" , "や", "やｍ", "やま"]
       stepTest(steps, "やま")
     })
-    todo("やま -> やまｄ", function(){
+    it("やま -> やまｄ", function(){
       var steps = ["ｙ" , "や", "やｍ", "やま", "やまｄ"]
       stepTest(steps, "やま")
     })
@@ -48,7 +48,7 @@ describe("historikana", function(){
       var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山", "山ｄ", "山だ", "山田", "山田", "山田ｔ", "山田た", "山田た"]
       stepTest(steps, "やまだた")
     })
-    todo("SuperMario1 scenario", function(){
+    it("SuperMario1 scenario", function(){
       var steps = ["ｓ", "す", "すｈ", "すは", "酢派", "酢破", "素破" ,
       "素破ｍ", "素破ま", "素破まｒ", "素破まり",
       "素破まりお", "素破真理雄"
