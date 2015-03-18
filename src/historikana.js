@@ -29,7 +29,7 @@ var detectPartialize = function(reversed, groups){
     })
     right = reversed.slice(i, reversed.length - 1)
   })
-  if(left && left.length > 0 && right && right.length){ // center && center)
+  if(left && left.length > 0 || right && right.length){ // center && center)
     // recursive
     detectPartialize(right, groups)
     detectPartialize(left, groups)
