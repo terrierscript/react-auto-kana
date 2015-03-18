@@ -14,32 +14,41 @@ var isSameKana = function(str1, str2){
 
 var detectPartialize = function(reversed, groups){
   var head = reversed[0]
-  // 分解を特定する
+  // 分解を特定する。最も後ろのパターンでのマッチを優先させる
   var split = reversed.reduce(function(result, value, i){
-    var reg = new RegExp("(.*)" + value + "(.*)")
+    var regValue = "(" + value + ")"
+    var reg = new RegExp("(.*)" + regValue + "(.*)")
+    console.log("=============")
+    console.log([head,value])
     if(!reg.test(head) || head === value){
       return result
     }
-    // var matched = reg.exec(head)
-    // var leftMatch = matched[1]
-    // var rightMatch = matched[2]
-    var left = reversed.slice(0, i - 1).map(function(val){
-      return val.replace(value, "")
-    })
-    var right = reversed.slice(i, reversed.length - 1)
-    if(left && left.length > 0 || right && right.length){
-      result.left = left
-      result.right = right
-    }
-    return result
-  }, {left : null, right : null})
+    var matched = reg.exec(head)
+    var left = matched[1]
+    var center = matched[2]
+    var right = matched[3]
+    var befores = reversed.slice(0, i - 1)
+    console.log(value, [left, center, right], befores)
+    // var left = reversed.slice(0, i - 1).map(function(val){
+    //   return val.replace(value, "")
+    // })
+    // var right = reversed.slice(i, reversed.length - 1)
+    // if(left && left.length > 0 || right && right.length){
+    //   return {
+    //     left : left,
+    //     right : right
+    //   }
+    // }
+    // return result
+  }, {})
 
-  if(split.left && split.right){ // center && center)
-    detectPartialize(split.right, groups)
-    detectPartialize(split.left, groups)
-  }else{
-    groups.push(reversed)
-  }
+  // if(split.left && split.right){ // center && center)
+  //   detectPartialize(split.right, groups)
+  //   detectPartialize(split.left, groups)
+  // }else{
+  //   groups.push(reversed)
+  // }
+  console.log(head, groups)
   return groups
 }
 
