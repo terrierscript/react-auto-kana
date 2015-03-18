@@ -11,44 +11,61 @@ var isSameKana = function(str1, str2){
   }
   return (stemora.normalize(str1) === stemora.normalize(str2))
 }
-
+var spoilLeft = function(left, center, right, befores){
+  if(left === ""){
+    return null
+  }
+  var reg = new RegExp(center + right + "$")
+  return befores.map(function(val){
+    return val.replace(reg, "")
+  })
+}
+var spoilRight = function(left, center, right, befores){
+  if(right === ""){
+    return null
+  }
+  var reg = new RegExp("^" + left + center)
+  return befores.map(function(val){
+    return val.replace(reg, "")
+  })
+}
 var detectPartialize = function(reversed, groups){
   var head = reversed[0]
+  var hasMatched = false
+  // console.log("==================" + head, groups)
   // 分解を特定する。最も後ろのパターンでのマッチを優先させる
-  var split = reversed.reduce(function(result, value, i){
+  reversed.reduce(function(result, value, i){
     var regValue = "(" + value + ")"
     var reg = new RegExp("(.*)" + regValue + "(.*)")
-    console.log("=============")
-    console.log([head,value])
-    if(!reg.test(head) || head === value){
+    if(!reg.test(head) || head === value || value === ""){
       return result
     }
+    // console.log("======|||||||============")
+    hasMatched = true
     var matched = reg.exec(head)
     var left = matched[1]
     var center = matched[2]
     var right = matched[3]
     var befores = reversed.slice(0, i - 1)
-    console.log(value, [left, center, right], befores)
-    // var left = reversed.slice(0, i - 1).map(function(val){
-    //   return val.replace(value, "")
-    // })
-    // var right = reversed.slice(i, reversed.length - 1)
-    // if(left && left.length > 0 || right && right.length){
-    //   return {
-    //     left : left,
-    //     right : right
-    //   }
-    // }
-    // return result
+    var lefts = spoilLeft(left, center, right, befores)
+    var rights = spoilRight(left, center, right, befores)
+    var centers = reversed.slice(i, reversed.length)
+    // console.log(lefts, centers, rights)
+    if(lefts){
+      // console.log("left", lefts, [head,value], [left , center , right])
+      detectPartialize(lefts, groups)
+    }
+    groups.push(centers)
+    if(rights){
+      // console.log("right", rights)
+      detectPartialize(rights, groups)
+    }
   }, {})
+  if(!hasMatched){
+    groups.push(reversed)
+  }
+  // console.log(groups)
 
-  // if(split.left && split.right){ // center && center)
-  //   detectPartialize(split.right, groups)
-  //   detectPartialize(split.left, groups)
-  // }else{
-  //   groups.push(reversed)
-  // }
-  console.log(head, groups)
   return groups
 }
 
