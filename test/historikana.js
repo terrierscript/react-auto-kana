@@ -24,7 +24,7 @@ describe("historikana", function(){
       var steps = ["ｙ" , "や", "やｍ", "やま"]
       stepTest(steps, "やま")
     })
-    it("やま -> やまｄ", function(){
+    todo("やま -> やまｄ", function(){
       var steps = ["ｙ" , "や", "やｍ", "やま", "やまｄ"]
       stepTest(steps, "やま")
     })
