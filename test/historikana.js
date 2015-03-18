@@ -1,6 +1,4 @@
 var assert = require("power-assert")
-var slot = require("../src/slot")
-var kanaLogic = require("../src/kana")
 var historikana = require("../src/historikana")
 var todo = process.env.CI ? it.skip : it
 var stepTest = function(steps, kana){
