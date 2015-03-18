@@ -16,9 +16,11 @@ var spoilLeft = function(left, center, right, befores){
     return null
   }
   var reg = new RegExp(center + right + "$")
-  return befores.map(function(val){
+  var result = befores.map(function(val){
     return val.replace(reg, "")
   })
+  // console.log(befores, result)
+  return result
 }
 var spoilRight = function(left, center, right, befores){
   if(right === ""){
@@ -29,17 +31,45 @@ var spoilRight = function(left, center, right, befores){
     return val.replace(reg, "")
   })
 }
-var detectPartialize = function(reversed, groups){
+
+var matcher = function(value){
+  var pattern = []
+  // left
+  var regValue = "(" + value + ")"
+  var leftReg = new RegExp("^" + regValue + "(.*)" + "$")
+  if(leftReg.test(value)){
+    var leftResult = leftReg.exec(value)
+    pattern.push({
+      left : leftResult[1],
+      right : leftResult[2]
+    })
+  }
+  var rightReg = new RegExp("^" + "(.*)" + regValue + "$")
+  if(rightReg.test(value)){
+    var rigthResult = rightReg.exec(value)
+    pattern.push({
+      left : rigthResult[1],
+      right : rigthResult[2]
+    })
+  }
+  // center
+  var centerReg = new RegExp("^(.*)" + regValue + "(.*)$")
+}
+
+var detectPartialize = function(reversed, groups, debug){
   var head = reversed[0]
   var hasMatched = false
-  // console.log("==================" + head, groups)
+  // console.log("==================")
+  // console.log(debug, head, groups)
   // 分解を特定する。最も後ろのパターンでのマッチを優先させる
   reversed.reduce(function(result, value, i){
     var regValue = "(" + value + ")"
-    var reg = new RegExp("(.*)" + regValue + "(.*)")
-    if(!reg.test(head) || head === value || value === ""){
+
+    var reg = new RegExp("^(.*)" + regValue + "(.*)$")
+    if(!reg.test(head) || head === value || value === "" || hasMatched){
       return result
     }
+
     // console.log("======|||||||============")
     hasMatched = true
     var matched = reg.exec(head)
@@ -50,15 +80,21 @@ var detectPartialize = function(reversed, groups){
     var lefts = spoilLeft(left, center, right, befores)
     var rights = spoilRight(left, center, right, befores)
     var centers = reversed.slice(i, reversed.length)
-    // console.log(lefts, centers, rights)
+    // console.log(debug, [head, "=>", value])
+    // console.log(debug, [left, center, right])
+    // console.log(debug, [lefts, centers, rights])
     if(lefts){
-      // console.log("left", lefts, [head,value], [left , center , right])
-      detectPartialize(lefts, groups)
+      // console.log("left", lefts, [head, "=>", value], [lefts, centers, rights])
+      // console.log("lefts", lefts)1
+      detectPartialize(lefts, groups, "left-" + value)
     }
-    groups.push(centers)
+    if(centers){
+      // console.log("center", centers, reversed)
+      detectPartialize(centers, groups, "center-" + value)
+    }
     if(rights){
       // console.log("right", rights)
-      detectPartialize(rights, groups)
+      detectPartialize(rights, groups, "rigth-" + value)
     }
   }, {})
   if(!hasMatched){
@@ -96,7 +132,8 @@ var shrink = function(histories){
 module.exports = function(histories){
   histories = shrink(histories)
   var reversed = histories.concat().reverse()
-  var groups = detectPartialize(reversed, [])
+  var groups = detectPartialize(reversed, [], "start")
+  // console.log(groups)
   var kana = groups.map(getKana)
   return kana.join("")
 }

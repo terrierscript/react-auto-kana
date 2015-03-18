@@ -12,7 +12,7 @@ var stepTest = function(steps, kana){
   assert.equal(kana, result.kana)
 
 }
-describe("logics", function(){
+describe.skip("logics", function(){
   describe("slot logic", function(){
     // it("convert", function(){
     //   var next = slot({
@@ -56,7 +56,7 @@ describe("logics", function(){
     // })
   })
   describe("E2E", function(){
-    it("XXX ｙ -> や", function(){
+    it("ｙ -> や", function(){
       var steps = ["ｙ" , "や"]
       stepTest(steps, "や")
     })
@@ -68,7 +68,7 @@ describe("logics", function(){
       var steps = ["まりお" ,"鞠男", "毬男"]
       stepTest(steps, "まりお")
     })
-    it("not お -> を XXX", function(){
+    it("not お -> を", function(){
       var steps = ["まりお","まりを","鞠男", "毬男"]
       stepTest(steps, "まりお")
     })

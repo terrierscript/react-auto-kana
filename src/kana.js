@@ -28,7 +28,7 @@ module.exports = function(state){
   var splits = state.splits || {}
   var cache = state.cache || {}
   var slots = state.slots || [{}]
-  console.log("==============")
+  // console.log("==============")
 
   var activeSplits = diffs.reduce(function(result, diff){
     if(diff.value && cache[diff.value]){
@@ -46,7 +46,7 @@ module.exports = function(state){
       return true
     })
   })
-  console.log(activeSplits, activeSlots)
+  // console.log(activeSplits, activeSlots)
   // var spls = Object.keys(splits).join("")
   // var diff2 = compactDiff(spls, state.value)
   // diff2.forEach(function(diff){

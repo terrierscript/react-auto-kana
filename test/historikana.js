@@ -5,18 +5,11 @@ var historikana = require("../src/historikana")
 var todo = process.env.CI ? it.skip : it
 var stepTest = function(steps, kana){
   var result = historikana(steps)
-  // var result = steps.reduce(function(state, value){
-  //   state.value = value
-  //   var result = kanaLogic(state)
-  //   // console.log(result)
-  //   return result
-  // }, {})
   assert.equal(kana, result)
-
 }
 describe("historikana", function(){
-  describe("E2E", function(){
-    it("XXX ｙ -> や", function(){
+  describe("simple", function(){
+    it("ｙ -> や", function(){
       var steps = ["ｙ" , "や"]
       stepTest(steps, "や")
     })
@@ -32,7 +25,7 @@ describe("historikana", function(){
       var steps = ["まりお" ,"鞠男", "毬男"]
       stepTest(steps, "まりお")
     })
-    it("not お -> を XXX", function(){
+    it("not お -> を", function(){
       var steps = ["まりお","まりを","鞠男", "毬男"]
       stepTest(steps, "まりお")
     })
@@ -40,6 +33,9 @@ describe("historikana", function(){
       var steps = ["まりお","鞠男", "まりを", "毬男"]
       stepTest(steps, "まりお")
     })
+  })
+  describe("scenario", function(){
+
     it("Dokaben scenario", function(){
       var steps = ["ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎"]
       stepTest(steps, "やまだたろう")
@@ -71,7 +67,12 @@ describe("historikana", function(){
       var steps = ["う", "うｂ", "うぶ", "初", "生", "生ｎ", "生な", "生なｍ", "生なま", "生生", "生生", "生生ｓ", "生生せ", "生生せい", "生生生", "生生生"]
       stepTest(steps, "うぶなませい")
     })
-    it("first insertSame Kanji scenario", function(){
+    todo("XXX Same Kanji scenario", function(){
+      var steps = ["ｎ","な","なｍ","なま","生","生う","生うｂ","生うぶ","生生"]
+      // console.log(historikana(steps))
+      stepTest(steps, "なまうぶ")
+    })
+    todo("first insert Same Kanji scenario", function(){
       var steps = ["","ｎ","な","なｍ","なま","生","生う","生うｂ","生うぶ","生生","ｓ生生","せ生生","せい生生","生生生"]
       // console.log(historikana(steps))
       stepTest(steps, "せいなまうぶ")
@@ -80,7 +81,11 @@ describe("historikana", function(){
       var steps = ["","あ","あｋ","あか","赤","赤あ","赤あお","赤青","赤ｋ青","赤き青","赤きい青","赤きいｒ青","赤きいろ青","赤黄色青"]
       // console.log(historikana(steps))
       stepTest(steps, "あかきいろあお")
-
+    })
+    it("Signal pattern2", function(){
+      var steps = ["","あ","あｋ","あか","赤","あ赤","あお赤","青赤","青赤ｋ","青赤き","青赤きい","青赤きいｒ","青赤きいろ","青赤黄色"]
+      // console.log(historikana(steps))
+      stepTest(steps, "あおあかきいろ")
     })
     it("Mobile Convert", function(){
       // In mobile app. input by char
