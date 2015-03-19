@@ -1,7 +1,4 @@
 var compactDiff = require("compact-diff")
-var isConvert = function(diff){
-  return (diff.added && diff.removed)
-}
 
 var isChanged = function(diff){
   return (diff.added || diff.removed)
@@ -40,6 +37,7 @@ var partialize = function(array){
         left : leftDiff,
         right : rightDiff
       }
+      return
     }
     if(edges.left !== leftDiff || edges.right !== rightDiff){
       breakpoint = i
@@ -87,5 +85,7 @@ var partial = function(array, result){
   return nextResult
 }
 module.exports = function(array){
-  return partial(array, [])
+  var result = partial(array, [])
+  console.log(result)
+  return result
 }
