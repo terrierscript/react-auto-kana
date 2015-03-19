@@ -54,6 +54,14 @@ var matcher = function(value){
   }
   // center
   var centerReg = new RegExp("^(.*)" + regValue + "(.*)$")
+  if(centerReg.test(value)){
+    var centerResult = centerReg.exec(value)
+    pattern.push({
+      left : centerResult[1],
+      center : centerResult[2],
+      right : centerResult[3]
+    })
+  }
 }
 
 var detectPartialize = function(reversed, groups, debug){
@@ -85,7 +93,7 @@ var detectPartialize = function(reversed, groups, debug){
     // console.log(debug, [lefts, centers, rights])
     if(lefts){
       // console.log("left", lefts, [head, "=>", value], [lefts, centers, rights])
-      // console.log("lefts", lefts)1
+      // console.log("lefts", lefts)
       detectPartialize(lefts, groups, "left-" + value)
     }
     if(centers){
