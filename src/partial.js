@@ -7,11 +7,6 @@ var isChanged = function(diff){
   return (diff.added || diff.removed)
 }
 
-var getConverts = function(diffs){
-  return diffs.filter(function(diff){
-    return isConvert(diff)
-  })
-}
 
 var diffEdge = function(diffs){
   var stop = false
@@ -69,41 +64,28 @@ var partialize = function(array){
     right : edges.right,
     next : rest
   }
-
-  // if(!isCenter){
-  // }
-  // if(isCenter){
-  //   var lefts = rest.map(function(value){
-  //     var reg = new RegExp(edges.right + "$")
-  //     return value.replace(reg, "")
-  //   })
-  //   var rights = rest.map(function(value){
-  //     var reg = new RegExp("^" + edges.left)
-  //     return value.replace(reg, "")
-  //   })
-  //   // console.log([lefts, rights])
-  // }
-  // console.log(hitted, rest)
 }
 var partial = function(array, result){
   result = result || []
   var part = partialize(array)
-  // console.log(part)
-  if(part.next){
-    var nR = partial(part.next)
-    console.log("====")
-    console.log(nR, part.left, part.right)
-    // TODO:left と rightの位置を調整したい。
-    if(nR[0] === part.left){
-      nR.unshift(part.current)
-      // result.push(part.current)
-    }else{
-      nR.push(part.current)
-    }
-    return nR
-  }else{
+  // console.log(array)
+  if(!part.next){
     result.push(part.current)
+    return result
   }
-  return result
+  var nextResult = partial(part.next)
+  var heads = nextResult.map(function(n){
+    return n[0]
+  })
+  var leftIndex = heads.indexOf(part.left)
+  var rightIndex = heads.indexOf(part.right)
+  if(leftIndex > -1){
+    nextResult.splice(leftIndex + 1, 0, part.current)
+  }else if(rightIndex > -1){
+    nextResult.splice(rightIndex, 0, part.current)
+  }
+  return nextResult
 }
-module.exports = partial
+module.exports = function(array){
+  return partial(array, [])
+}

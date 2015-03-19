@@ -1,6 +1,6 @@
 var kanachar = require("./kanachar")
 var stemora = require("stemora")
-
+var partial = require("./partial")
 // を === お
 var isSameKana = function(str1, str2){
   if(!kanachar(str1)){
@@ -140,7 +140,7 @@ var shrink = function(histories){
 module.exports = function(histories){
   histories = shrink(histories)
   var reversed = histories.concat().reverse()
-  var groups = detectPartialize(reversed, [], "start")
+  var groups = partial(reversed)
   // console.log(groups)
   var kana = groups.map(getKana)
   return kana.join("")
