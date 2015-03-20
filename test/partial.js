@@ -15,7 +15,11 @@ describe("partial", function(){
     assert.deepEqual(heads(partial(steps)), [ "鬼", "赤"])
 
   })
-  it("", function(){
+  it("red centrer", function(){
+    var steps = ["あ","あｋ","あか","赤","あ赤","あお赤","青赤","青赤ｋ","青赤き","青赤きい","青赤きいｒ","青赤きいろ","青赤黄色"]
+
+  })
+  it("yellow centrer", function(){
     var steps = ["","あ","あｋ","あか","赤","赤あ","赤あお","赤青","赤ｋ青","赤き青","赤きい青","赤きいｒ青","赤きいろ青","赤黄色青"].reverse()
     assert.deepEqual(heads(partial(steps)), ["赤", "黄色", "青"])
   })

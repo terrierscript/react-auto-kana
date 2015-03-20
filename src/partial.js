@@ -16,10 +16,10 @@ var diffEdge = function(diffs){
     return result
   }, []).map(function(diff){
     return diff.value
-  }).join("")
+  })
 }
 
-var partialize = function(array){
+var partialize_ = function(array){
   var head = array[0]
   var edges
   var breakpoint = -1
@@ -30,20 +30,25 @@ var partialize = function(array){
     if(head === value){ return }
     if(breakpoint > -1){ return }
     var diffs = compactDiff(value, head)
-    var leftDiff = diffEdge(diffs)
-    var rightDiff = diffEdge(diffs.concat().reverse())
+    var leftEdge = diffEdge(diffs).join("")
+    var rightEdge = diffEdge(diffs.concat().reverse()).reverse().join("")
     if(edges === undefined){
       edges = {
-        left : leftDiff,
-        right : rightDiff
+        left : leftEdge,
+        right : rightEdge
       }
       return
     }
-    if(edges.left !== leftDiff || edges.right !== rightDiff){
+    if(edges.left !== leftEdge && rightEdge === ""){
+      breakpoint = i
+      return
+    }
+    if(edges.right !== rightEdge && leftEdge === ""){
       breakpoint = i
       return
     }
   })
+  console.log(array, breakpoint)
   if(breakpoint === -1){
     return {
       current : array
@@ -63,6 +68,28 @@ var partialize = function(array){
     next : rest
   }
 }
+
+var partialize = function(array){
+  var head = array[0]
+  var left, right
+  var breakpoint = -1
+  // detect breakpoint
+  array.forEach(function(value, i){
+    var next = array[i + 1]
+    if(!next || head === value || breakpoint > -1){
+      return
+    }
+    var diffs = compactDiff(value, head)
+    var _left = diffEdge(diffs).join("")
+    var _right = diffEdge(diffs.concat().reverse()).reverse().join("")
+    if(left === undefined && right === undefined){
+      left = _left
+      right = _right
+    }
+  })
+}
+
+
 var partial = function(array, result){
   result = result || []
   var part = partialize(array)
