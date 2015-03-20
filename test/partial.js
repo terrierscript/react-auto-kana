@@ -21,6 +21,7 @@ describe("partial", function(){
   })
   it("yellow centrer", function(){
     var steps = ["","あ","あｋ","あか","赤","赤あ","赤あお","赤青","赤ｋ青","赤き青","赤きい青","赤きいｒ青","赤きいろ青","赤黄色青"].reverse()
+    //, "赤黄色青みどり", "赤黄色青緑" ].
     assert.deepEqual(heads(partial(steps)), ["赤", "黄色", "青"])
   })
 })

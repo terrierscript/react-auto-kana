@@ -86,12 +86,18 @@ var getBreakPoint = function(array){
       left = _left
       right = _right
     }
+    // 片方狂った時に修正。右も左も綺麗に出てしまうポイントが
+
     // break
-    if(left !== _left && right === ""){
-      breakpoint = i
+    if(left !== _left){
+      if(right === "" || _left === ""){
+        breakpoint = i
+      }
     }
-    if(right !== _right && left === ""){
-      breakpoint = i
+    if(right !== _right){
+      if(left === "" || _right === ""){
+        breakpoint = i
+      }
     }
   })
   // console.log(breakpoint, array[breakpoint - 1], array[breakpoint], left, right)
@@ -104,22 +110,31 @@ var getBreakPoint = function(array){
 
 var partialize = function(array){
   var breaks = getBreakPoint(array)
-  console.log("+++", breaks)
   if(breaks.breakpoint === -1){
     return array
   }
-  var hitted = array.concat()
-  var rest = hitted.splice(0, breaks.breakpoint - 1)
-
-  var next = rest.map(function(value){
+  var rest = array.concat() // copy
+  var hitted = rest.splice(0, breaks.breakpoint - 1)
+  hitted = hitted.map(function(value){
     var reg = new RegExp("^" + breaks.left + "(.+)" + breaks.right + "$")
     return value.replace(reg, "$1")
   })
-  var nextResult = partialize(next)
+  var lefts = rest.map(function(value){
+    var reg = new RegExp("^" + "(.+)" + breaks.right + "$")
+    return value.replace(reg, "$1")
+  })
+  var rights = rest.map(function(value){
+    var reg = new RegExp("^" + breaks.left + "(.+)" + "$")
+    return value.replace(reg, "$1")
+  })
+  console.log("================")
+  console.log(breaks)
+  console.log(lefts, rights)
+  var nextResult = partialize(rest)
   if(breaks.left !== ""){
-    return [hitted, nextResult]
-  }else{
     return [nextResult, hitted]
+  }else{
+    return [hitted, nextResult]
   }
 }
 
