@@ -7,11 +7,11 @@ var heads = function(result){
 }
 describe("partial", function(){
   it("left", function(){
-    var steps = ["赤", "赤お", "赤おｎ","赤おに", "赤鬼"].reverse()
+    var steps = ["あ", "あｋ", "あか", "垢", "赤", "赤お", "赤おｎ","赤おに", "赤鬼"].reverse()
     assert.deepEqual(heads(partial(steps)), ["赤", "鬼"])
   })
-  it("", function(){
-    var steps = ["赤", "お赤", "おｎ赤","おに赤", "鬼赤"].reverse()
+  it("right", function(){
+    var steps = ["あ", "あｋ", "あか", "垢", "赤", "お赤", "おｎ赤","おに赤", "鬼赤"].reverse()
     assert.deepEqual(heads(partial(steps)), [ "鬼", "赤"])
 
   })

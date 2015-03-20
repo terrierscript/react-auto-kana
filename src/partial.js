@@ -69,14 +69,14 @@ var partialize_ = function(array){
   }
 }
 
-var partialize = function(array){
+
+var getBreakPoint = function(array){
   var head = array[0]
   var left, right
   var breakpoint = -1
   // detect breakpoint
   array.forEach(function(value, i){
-    var next = array[i + 1]
-    if(!next || head === value || breakpoint > -1){
+    if(!array[i + 1] || head === value || breakpoint > -1){
       return
     }
     var diffs = compactDiff(value, head)
@@ -86,30 +86,64 @@ var partialize = function(array){
       left = _left
       right = _right
     }
+    // break
+    if(left !== _left && right === ""){
+      breakpoint = i
+    }
+    if(right !== _right && left === ""){
+      breakpoint = i
+    }
   })
+  // console.log(breakpoint, array[breakpoint - 1], array[breakpoint], left, right)
+  return {
+    breakpoint : breakpoint,
+    left : left,
+    right : right
+  }
 }
 
+var partialize = function(array){
+  var breaks = getBreakPoint(array)
+  console.log("+++", breaks)
+  if(breaks.breakpoint === -1){
+    return array
+  }
+  var hitted = array.concat()
+  var rest = hitted.splice(0, breaks.breakpoint - 1)
+
+  var next = rest.map(function(value){
+    var reg = new RegExp("^" + breaks.left + "(.+)" + breaks.right + "$")
+    return value.replace(reg, "$1")
+  })
+  var nextResult = partialize(next)
+  if(breaks.left !== ""){
+    return [hitted, nextResult]
+  }else{
+    return [nextResult, hitted]
+  }
+}
 
 var partial = function(array, result){
   result = result || []
   var part = partialize(array)
+  return part
   // console.log(array)
-  if(!part.next){
-    result.push(part.current)
-    return result
-  }
-  var nextResult = partial(part.next)
-  var heads = nextResult.map(function(n){
-    return n[0]
-  })
-  var leftIndex = heads.indexOf(part.left)
-  var rightIndex = heads.indexOf(part.right)
-  if(leftIndex > -1){
-    nextResult.splice(leftIndex + 1, 0, part.current)
-  }else if(rightIndex > -1){
-    nextResult.splice(rightIndex, 0, part.current)
-  }
-  return nextResult
+  // if(!part.next){
+  //   result.push(part.current)
+  //   return result
+  // }
+  // var nextResult = partial(part.next)
+  // var heads = nextResult.map(function(n){
+  //   return n[0]
+  // })
+  // var leftIndex = heads.indexOf(part.left)
+  // var rightIndex = heads.indexOf(part.right)
+  // if(leftIndex > -1){
+  //   nextResult.splice(leftIndex + 1, 0, part.current)
+  // }else if(rightIndex > -1){
+  //   nextResult.splice(rightIndex, 0, part.current)
+  // }
+  // return nextResult
 }
 module.exports = function(array){
   var result = partial(array, [])
