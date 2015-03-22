@@ -19,57 +19,6 @@ var diffEdge = function(diffs){
   })
 }
 
-var partialize_ = function(array){
-  var head = array[0]
-  var edges
-  var breakpoint = -1
-  // detect breakpoint
-  array.forEach(function(value, i){
-    var next = array[i + 1]
-    if(!next){ return }
-    if(head === value){ return }
-    if(breakpoint > -1){ return }
-    var diffs = compactDiff(value, head)
-    var leftEdge = diffEdge(diffs).join("")
-    var rightEdge = diffEdge(diffs.concat().reverse()).reverse().join("")
-    if(edges === undefined){
-      edges = {
-        left : leftEdge,
-        right : rightEdge
-      }
-      return
-    }
-    if(edges.left !== leftEdge && rightEdge === ""){
-      breakpoint = i
-      return
-    }
-    if(edges.right !== rightEdge && leftEdge === ""){
-      breakpoint = i
-      return
-    }
-  })
-  console.log(array, breakpoint)
-  if(breakpoint === -1){
-    return {
-      current : array
-    }
-  }
-  // split array
-  var rest = array.concat()
-  var hitted = rest.splice(0, breakpoint - 1)
-  var current = hitted.map(function(value){
-    var reg = new RegExp("^" + edges.left + "(.+)" + edges.right + "$")
-    return value.replace(reg, "$1")
-  })
-  return {
-    current : current,
-    left : edges.left,
-    right : edges.right,
-    next : rest
-  }
-}
-
-
 var getBreakPoint = function(array){
   var head = array[0]
   var left, right
