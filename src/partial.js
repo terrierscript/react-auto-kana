@@ -86,21 +86,22 @@ var getBreakPoint = function(array){
       left = _left
       right = _right
     }
-    // 片方狂った時に修正。右も左も綺麗に出てしまうポイントが
-
     // break
     if(left !== _left){
-      if(right === "" || _left === ""){
+      if(right === "" && _left === ""){
         breakpoint = i
+        return
       }
+      left = _left
     }
     if(right !== _right){
-      if(left === "" || _right === ""){
+      if(left === "" && _right === ""){
         breakpoint = i
+        return
       }
+      right = _right
     }
   })
-  // console.log(breakpoint, array[breakpoint - 1], array[breakpoint], left, right)
   return {
     breakpoint : breakpoint,
     left : left,
@@ -108,33 +109,28 @@ var getBreakPoint = function(array){
   }
 }
 
+var sanitize = function(array, left, right){
+  return array.map(function(value){
+    var reg = new RegExp("^" + left + "(.+)" + right + "$")
+    return value.replace(reg, "$1")
+  })
+}
+
 var partialize = function(array){
   var breaks = getBreakPoint(array)
+
   if(breaks.breakpoint === -1){
-    return array
+    return [array]
   }
   var rest = array.concat() // copy
   var hitted = rest.splice(0, breaks.breakpoint - 1)
-  hitted = hitted.map(function(value){
-    var reg = new RegExp("^" + breaks.left + "(.+)" + breaks.right + "$")
-    return value.replace(reg, "$1")
-  })
-  var lefts = rest.map(function(value){
-    var reg = new RegExp("^" + "(.+)" + breaks.right + "$")
-    return value.replace(reg, "$1")
-  })
-  var rights = rest.map(function(value){
-    var reg = new RegExp("^" + breaks.left + "(.+)" + "$")
-    return value.replace(reg, "$1")
-  })
-  console.log("================")
-  console.log(breaks)
-  console.log(lefts, rights)
-  var nextResult = partialize(rest)
+  hitted = sanitize(hitted, breaks.left, breaks.right)
+  var r = partialize(rest)
+  var h = partialize(hitted)
   if(breaks.left !== ""){
-    return [nextResult, hitted]
-  }else{
-    return [hitted, nextResult]
+    return r.concat(h)
+  }else if(breaks.right !== ""){
+    return h.concat(r)
   }
 }
 
@@ -142,26 +138,8 @@ var partial = function(array, result){
   result = result || []
   var part = partialize(array)
   return part
-  // console.log(array)
-  // if(!part.next){
-  //   result.push(part.current)
-  //   return result
-  // }
-  // var nextResult = partial(part.next)
-  // var heads = nextResult.map(function(n){
-  //   return n[0]
-  // })
-  // var leftIndex = heads.indexOf(part.left)
-  // var rightIndex = heads.indexOf(part.right)
-  // if(leftIndex > -1){
-  //   nextResult.splice(leftIndex + 1, 0, part.current)
-  // }else if(rightIndex > -1){
-  //   nextResult.splice(rightIndex, 0, part.current)
-  // }
-  // return nextResult
 }
 module.exports = function(array){
   var result = partial(array, [])
-  console.log(result)
   return result
 }
