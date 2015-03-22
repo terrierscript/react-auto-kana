@@ -1,5 +1,4 @@
 var kanachar = require("./kanachar")
-var stemora = require("stemora")
 var partial = require("./partial")
 // を === お
 var isSameKana = function(str1, str2){
@@ -9,7 +8,7 @@ var isSameKana = function(str1, str2){
   if(!kanachar(str2)){
     return false
   }
-  return (stemora.normalize(str1) === stemora.normalize(str2))
+  return str1.replace("を", "お") === str2.replace("を", "お")
 }
 var spoilLeft = function(left, center, right, befores){
   if(left === ""){
