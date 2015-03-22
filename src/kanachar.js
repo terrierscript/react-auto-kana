@@ -8,8 +8,3 @@ var isKana = function(str){
 }
 module.exports = isKana
 module.exports.isKana = isKana
-module.exports.hasKana = function(str){
-  str = str || ""
-  var reg = new RegExp(kanaReg)
-  return reg.test(str)
-}
