@@ -65,7 +65,7 @@ describe("historikana", function(){
       var steps = ["う", "うｂ", "うぶ", "初", "生", "生ｎ", "生な", "生なｍ", "生なま", "生生", "生生", "生生ｓ", "生生せ", "生生せい", "生生生", "生生生"]
       stepTest(steps, "うぶなませい")
     })
-    todo("XXX Same Kanji scenario", function(){
+    it("Same Kanji scenario", function(){
       var steps = ["ｎ","な","なｍ","なま","生","生う","生うｂ","生うぶ","生生"]
       // console.log(historikana(steps))
       stepTest(steps, "なまうぶ")

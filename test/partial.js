@@ -13,7 +13,6 @@ describe("partial", function(){
   it("right", function(){
     var steps = ["あ", "あｋ", "あか", "垢", "赤", "お赤", "おｎ赤","おに赤", "鬼赤"].reverse()
     assert.deepEqual(heads(partial(steps)), [ "鬼", "赤"])
-
   })
   it("red centrer", function(){
     var steps = ["あ","あｋ","あか","赤","あ赤","あお赤","青赤","青赤ｋ","青赤き","青赤きい","青赤きいｒ","青赤きいろ","青赤黄色"].reverse()
@@ -26,5 +25,10 @@ describe("partial", function(){
     //, "赤黄色青みどり", "赤黄色青緑" ].
     var result = partial(steps)
     assert.deepEqual(heads(result), ["赤", "黄色", "青"])
+  })
+  it("same kanji partial", function(){
+    var steps = ["","ｎ","な","なｍ","なま","生","生う","生うｂ","生うぶ","生生","ｓ生生","せ生生","せい生生","生生生"].reverse()
+    var result = partial(steps)
+    assert.deepEqual(heads(result), [ "生", "生", "生"])
   })
 })

@@ -19,6 +19,7 @@ var diffEdge = function(diffs){
   })
 }
 
+
 var getBreakPoint = function(array){
   var head = array[0]
   var left, right
@@ -29,6 +30,7 @@ var getBreakPoint = function(array){
       return
     }
     var diffs = compactDiff(value, head)
+    // console.log(diffs, value, head, left, right)
     var _left = diffEdge(diffs).join("")
     var _right = diffEdge(diffs.concat().reverse()).reverse().join("")
     if(left === undefined && right === undefined){
@@ -72,8 +74,9 @@ var partialize = function(array){
     return [array]
   }
   var rest = array.concat() // copy
-  var hitted = rest.splice(0, breaks.breakpoint - 1)
-  hitted = sanitize(hitted, breaks.left, breaks.right)
+  var rhitted = rest.splice(0, breaks.breakpoint - 1)
+  var hitted = sanitize(rhitted, breaks.left, breaks.right)
+  // console.log("RRR", rest, rhitted, breaks)
   var r = partialize(rest)
   var h = partialize(hitted)
   if(breaks.left !== ""){
