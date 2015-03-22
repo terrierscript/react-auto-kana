@@ -1,6 +1,6 @@
 var sanitize = require("../src/sanitize")
 var assert = require("power-assert")
-describe("partial", function(){
+describe("", function(){
   it("", function(){
   })
 })

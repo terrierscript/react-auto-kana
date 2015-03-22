@@ -16,7 +16,7 @@ describe("partial", function(){
 
   })
   it("red centrer", function(){
-    var steps = ["あ","あｋ","あか","赤","あ赤","あお赤","青赤","青赤ｋ","青赤き","青赤きい","青赤きいｒ","青赤きいろ","青赤黄色"]
+    var steps = ["あ","あｋ","あか","赤","あ赤","あお赤","青赤","青赤ｋ","青赤き","青赤きい","青赤きいｒ","青赤きいろ","青赤黄色"].reverse()
     var result = partial(steps)
     assert.deepEqual(heads(result), ["青", "赤", "黄色"])
 
