@@ -3,7 +3,7 @@ var historikana = require("../src/historikana")
 var todo = process.env.CI ? it.skip : it
 var stepTest = function(steps, kana){
   var result = historikana(steps)
-  assert.equal(kana, result)
+  assert.equal(kana, result.kana)
 }
 describe("historikana", function(){
   describe("simple", function(){
@@ -88,6 +88,10 @@ describe("historikana", function(){
     it("Mobile Convert", function(){
       // In mobile app. input by char
       var steps = ["や", "やま", "やまた", "やまだ", "山田"]
+      stepTest(steps, "やまだ")
+    })
+    it("remove tarou", function(){
+      var steps = [ "ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎", "山田太", "山田" ]
       stepTest(steps, "やまだ")
     })
   })

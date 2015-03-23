@@ -4,7 +4,9 @@ var historikana = require("./historikana")
 var logic = function(state){
   var value = state.value
   state.history.push(value)
-  state.kana = historikana(state.history)
+  var result = historikana(state.history)
+  state.kana = result.kana
+  state.partial = result.partial
   return state
 }
 

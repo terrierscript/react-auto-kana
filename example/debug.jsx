@@ -10,15 +10,12 @@ var Debugger = React.createClass({
     }
   },
   onUpdateKana(data){
-    var mode = this.state.kanaMode
     var history = this.state.history || []
     if(history[ history.length - 1 ] !== data.value){
       history.push(data.value)
     }
     this.setState({
       kana : data.kana,
-      prevMode : mode,
-      kanaMode : data.mode,
       data : data,
       dataDump : JSON.stringify(data, null, "  "),
       history : history,

@@ -31,4 +31,10 @@ describe("partial", function(){
     var result = partial(steps)
     assert.deepEqual(heads(result), [ "生", "生", "生"])
   })
+  it("Remove", function(){
+    // In mobile app. input by char
+    var steps = [ "ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎", "山田太", "山田" ].reverse()
+    var result = partial(steps)
+    assert.deepEqual(heads(result), [ "山田"])
+  })
 })

@@ -62,21 +62,30 @@ var getBreakPoint = function(array){
 
 var sanitize = function(array, left, right){
   return array.map(function(value){
-    var reg = new RegExp("^" + left + "(.+)" + right + "$")
+    var reg = new RegExp("^" + left + "(.*)" + right + "$")
     return value.replace(reg, "$1")
   })
 }
-
+var split = function(array, breakpoint){
+  var left = array.concat() // copy
+  var right = left.splice(0, breakpoint - 1)
+  return {
+    left : left,
+    right : right
+  }
+}
 var partialize = function(array){
   var breaks = getBreakPoint(array)
-
+  // console.log(breaks, array)
   if(breaks.breakpoint === -1){
+    if(array[0] === ""){
+      return []
+    }
     return [array]
   }
-  var rest = array.concat() // copy
-  var rhitted = rest.splice(0, breaks.breakpoint - 1)
-  var hitted = sanitize(rhitted, breaks.left, breaks.right)
-  // console.log("RRR", rest, rhitted, breaks)
+  var splited = split(array, breaks.breakpoint);
+  var rest = splited.left
+  var hitted = sanitize(splited.right, breaks.left, breaks.right)
   var r = partialize(rest)
   var h = partialize(hitted)
   if(breaks.left !== ""){
