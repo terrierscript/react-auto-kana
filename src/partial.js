@@ -83,7 +83,7 @@ var partialize = function(array){
     }
     return [array]
   }
-  var splited = split(array, breaks.breakpoint);
+  var splited = split(array, breaks.breakpoint)
   var rest = splited.left
   var hitted = sanitize(splited.right, breaks.left, breaks.right)
   var r = partialize(rest)
