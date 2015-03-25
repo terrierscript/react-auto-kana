@@ -1,4 +1,4 @@
-var defaultLogic = require("../src/logic")
+var defaultLogic = require("../src/kana")
 var legacyLogic = require("../legacy/legacy_logic")
 
 var React = require("react")
