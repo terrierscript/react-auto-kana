@@ -94,5 +94,9 @@ describe("historikana", function(){
       var steps = [ "ｙ", "や", "やｍ", "やま", "やまｄ", "やまだ", "山田", "山田", "山田ｔ", "山田た", "山田たｒ", "山田たろ", "山田たろう", "山田太郎", "山田太郎", "山田太", "山田" ]
       stepTest(steps, "やまだ")
     })
+    it("mobule input", function(){
+      var steps = ["","や","ゆ"]
+      stepTest(steps, "ゆ")
+    })
   })
 })
