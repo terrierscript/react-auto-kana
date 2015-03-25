@@ -70,7 +70,7 @@ describe("historikana", function(){
       // console.log(historikana(steps))
       stepTest(steps, "なまうぶ")
     })
-    todo("first insert Same Kanji scenario", function(){
+    it.skip("first insert Same Kanji scenario", function(){
       var steps = ["","ｎ","な","なｍ","なま","生","生う","生うｂ","生うぶ","生生","ｓ生生","せ生生","せい生生","生生生"]
       // console.log(historikana(steps))
       stepTest(steps, "せいなまうぶ")
