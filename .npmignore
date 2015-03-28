@@ -2,6 +2,7 @@ example/
 legacy/
 pages/
 test/
+dist/
 .eslintrc
 .eslintignore
 .gitattribute
@@ -9,4 +10,4 @@ test/
 circle.yml
 gh-pages.sh
 npm-debug.log
-memo
+memo/
