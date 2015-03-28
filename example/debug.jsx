@@ -6,26 +6,20 @@ var Debugger = React.createClass({
     return {
       kana : "",
       kanaMode : "",
-      history : []
+      data : {}
     }
   },
   onUpdateKana(data){
-    var history = this.state.history || []
-    if(history[ history.length - 1 ] !== data.value){
-      history.push(data.value)
-    }
     this.setState({
       kana : data.kana,
       data : data,
       dataDump : JSON.stringify(data, null, "  "),
-      history : history,
-      historyDump : JSON.stringify(history)
-
     })
     // this.props.onChange(this.state)
   },
   render(){
     //var b = ();
+    var historyDump = JSON.stringify(this.state.data.history)
     return (
       <div>
         <div className="input-block">
@@ -39,7 +33,7 @@ var Debugger = React.createClass({
           <div>
             <pre>
               <code>
-                {this.state.historyDump}
+                {historyDump}
               </code>
             </pre>
             <pre>
