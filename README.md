@@ -62,4 +62,3 @@ npm run example
 
 # Known Issue
 - Invalid behavor when same Kanji is input.
-- Mobile(た -> だ)
