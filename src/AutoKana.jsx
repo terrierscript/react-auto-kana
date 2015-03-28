@@ -1,10 +1,10 @@
 var React = require("react")
-var historikana = require("./historikana")
+var historykana = require("historykana")
 
 var logic = function(state){
   var value = state.value
   state.history.push(value)
-  var result = historikana(state.history)
+  var result = historykana(state.history)
   state.kana = result.kana
   state.partial = result.partial
   return state
