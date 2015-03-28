@@ -1,6 +1,6 @@
 {
   "name": "react-auto-kana",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Build Japanese Furigana from input values",
   "homepage": "http://suisho.github.io/react-auto-kana/",
   "main": "dist/index.js",
