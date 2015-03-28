@@ -8,7 +8,7 @@
     "compact-diff": "^0.0.2",
     "diff": "^1.3.0",
     "extend": "^2.0.0",
-    "historykana": "0.0.1",
+    "historykana": "0.0.2",
     "japanese": "^0.2.1",
     "react": "^0.13.0"
   },
