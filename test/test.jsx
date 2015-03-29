@@ -3,7 +3,7 @@ var React = require("react/addons")
 var jsdom = require('mocha-jsdom');
 var AutoKana = require("../src/AutoKana.jsx")
 var TestUtils = React.addons.TestUtils
-describe("Component", function(){
+describe("Simple scenario", function(){
   jsdom();
   it("do", function(){
     function noop(){ // noop
