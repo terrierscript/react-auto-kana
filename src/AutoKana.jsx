@@ -6,7 +6,6 @@ var logic = function(state){
   state.history.push(value)
   var result = historykana(state.history)
   state.kana = result.kana
-  state.partial = result.partial
   return state
 }
 
@@ -58,6 +57,7 @@ var KanaInput = React.createClass({
       {...this.props}
       value={this.state.value}
       onChange={this.onChange}
+      ref="input"
     />
   }
 })
