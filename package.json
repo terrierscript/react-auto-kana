@@ -1,14 +1,11 @@
 {
   "name": "react-auto-kana",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Build Japanese Furigana from input values",
   "homepage": "http://suisho.github.io/react-auto-kana/",
   "main": "dist/index.js",
   "dependencies": {
-    "compact-diff": "^0.0.2",
-    "diff": "^1.3.0",
-    "extend": "^2.0.0",
-    "historykana": "0.0.2",
+    "historykana": "^0.0.2",
     "japanese": "^0.2.1",
     "react": "^0.13.0"
   },
@@ -25,8 +22,11 @@
     "espower-loader": "^0.10.0",
     "harp": "^0.15.2",
     "intelli-espower-loader": "^0.6.0",
+    "jsdom": "^4.0.5",
     "jsx": "^0.9.89",
     "minimist": "^1.1.0",
+    "mocha": "^2.2.1",
+    "mocha-jsdom": "^0.2.1",
     "power-assert": "^0.10.2",
     "react-json-inspector": "^4.2.1",
     "reactify": "^1.0.0",
@@ -39,7 +39,7 @@
     "page-build": "browserify example/main.jsx > pages/dist/build.js",
     "page-compile": "harp compile example pages",
     "page": "./gh-pages.sh",
-    "test": "mocha --compilers js:babel/register --require intelli-espower-loader",
+    "test": "mocha --compilers js:babel/register --require intelli-espower-loader test/test.jsx",
     "dist": "mkdir -p dist ; rm dist/*.js; babel src/AutoKana.jsx > dist/index.js; cp src/*.js dist/"
   },
   "keywords": [

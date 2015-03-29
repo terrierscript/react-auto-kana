@@ -20,15 +20,13 @@ var Example = React.createClass({
   render(){
     return (
       <div>
-        <div>
-          <div className="input-block">
-            <span>Input:</span>
-            <AutoKana onUpdate={this.onUpdateKana} placeholder="Input here!"/>
-          </div>
-          <div className="kana-block">
-            <span>Kana:</span>
-            <input name="kana" value={this.state.kana} onChange={this.onChange} />
-          </div>
+        <div className="input-block">
+          <span>Input:</span>
+          <AutoKana onUpdate={this.onUpdateKana} placeholder="Input here!"/>
+        </div>
+        <div className="kana-block">
+          <span>Kana:</span>
+          <input name="kana" value={this.state.kana} onChange={this.onChange} />
         </div>
       </div>
     )
