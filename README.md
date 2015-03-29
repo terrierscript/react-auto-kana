@@ -61,4 +61,6 @@ npm run example
 ```
 
 # Known Issue
-- Invalid behavor when same Kanji is input.
+Core library is [here](http://github.com/suisho/historykana)
+
+- Invalid behavior when same Kanji is input.
