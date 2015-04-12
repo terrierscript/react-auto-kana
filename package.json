@@ -9,10 +9,7 @@
     "japanese": "^0.2.1",
     "react": "^0.13.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:suisho/react-auto-kana.git"
-  },
+  "repository": "https://github.com/suisho/react-auto-kana.git",
   "devDependencies": {
     "babel": "^5.0.12",
     "babelify": "^5.0.3",
