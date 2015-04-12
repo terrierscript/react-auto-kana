@@ -1,7 +1,7 @@
 var assert = require("power-assert")
 var React = require("react/addons")
 var jsdom = require('mocha-jsdom');
-var AutoKana = require("../src/AutoKana.jsx")
+var AutoKana = require("../lib/AutoKana.js")
 var TestUtils = React.addons.TestUtils
 describe("Simple scenario", function(){
   jsdom();

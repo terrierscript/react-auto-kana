@@ -1,11 +1,11 @@
 {
   "name": "react-auto-kana",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Build Japanese Furigana from input values",
   "homepage": "http://suisho.github.io/react-auto-kana/",
   "main": "dist/index.js",
   "dependencies": {
-    "historykana": "^0.0.2",
+    "historykana": "^1.0.0",
     "japanese": "^0.2.1",
     "react": "^0.13.0"
   },
@@ -14,7 +14,7 @@
     "url": "git@github.com:suisho/react-auto-kana.git"
   },
   "devDependencies": {
-    "babel": "^4.7.3",
+    "babel": "^5.0.12",
     "babelify": "^5.0.3",
     "browserify": "^8.1.3",
     "eslint": "^0.15.1",
@@ -32,14 +32,19 @@
     "reactify": "^1.0.0",
     "watchify": "^2.3.0"
   },
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "scripts": {
-    "lint": "eslint js/**/*.jsx",
+    "build": "babel src --out-dir lib",
+    "prepublish": "npm run build",
     "example": "harp server example",
     "watch": "mkdir -p example/dist; watchify -v -d example/main.jsx -o example/dist/build.js",
     "page-build": "browserify example/main.jsx > pages/dist/build.js",
     "page-compile": "harp compile example pages",
     "page": "./gh-pages.sh",
-    "test": "mocha --compilers js:babel/register --require intelli-espower-loader test/test.jsx",
+    "test": "npm run build & mocha --compilers js:babel/register --require intelli-espower-loader test/test.jsx",
     "dist": "mkdir -p dist ; rm dist/*.js; babel src/AutoKana.jsx > dist/index.js; cp src/*.js dist/"
   },
   "keywords": [
