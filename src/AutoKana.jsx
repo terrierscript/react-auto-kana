@@ -5,7 +5,7 @@ var logic = function(state){
   var value = state.value
   state.history.push(value)
   var result = historykana(state.history)
-  state.kana = result.kana
+  state.kana = result
   return state
 }
 
