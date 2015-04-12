@@ -1,1 +1,1 @@
-module.exports = require("./src/AutoKana.jsx")
+module.exports = require("./lib/AutoKana.js")
