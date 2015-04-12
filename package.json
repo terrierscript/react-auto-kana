@@ -41,7 +41,7 @@
     "page-build": "browserify example/main.jsx > pages/dist/build.js",
     "page-compile": "harp compile example pages",
     "page": "./gh-pages.sh",
-    "test": "mocha --compilers js:babel/register --require intelli-espower-loader test/test.jsx",
+    "test": "npm run build & mocha --compilers js:babel/register --require intelli-espower-loader test/test.jsx",
     "dist": "mkdir -p dist ; rm dist/*.js; babel src/AutoKana.jsx > dist/index.js; cp src/*.js dist/"
   },
   "keywords": [
